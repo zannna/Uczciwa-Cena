@@ -1,0 +1,76 @@
+.gearButton {
+    background-image: url("../img/ikonki/gear.svg");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    border: 2px solid black;
+}
+.binButton
+{
+    background-image: url("../img/ikonki/bin.svg");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    border: 2px solid black;
+
+}
+/*wzięte z adding*/
+#addButton
+{
+    /*background-image: url("../img/ikonki/add.svg");
+    background-size: cover;*/
+    margin-bottom: 0.5em;
+    padding: 2em;
+    width:45%;
+    height:60%;
+    background: #F5F5F5;
+    border: 3px solid #737373;
+    border-radius: 30px;
+    font-family: 'Glegoo';
+    font-size: 1em;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+
+}
+#addButton>img
+{
+    width:85%;
+}
+.cont
+{
+    height: 55vh;
+    min-height: 400px;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*ściąga mi forma z adding i przycisk głupio wygląda*/
+form
+{
+    all: initial;
+    height: 55vh;
+    min-height: 400px;
+    min-width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+/*ściąga mi forma z adding i przycisk głupio wygląda*/
+/*DO POPRAWY BO WRZUCIŁAM JAKIŚ RANDOMOWY MARGINES*/
+#gearForm {
+    all: initial;
+    margin-top: 0;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 0.5em;
+}
+
+#option1
+{
+    background: #AB9D91;
+}
