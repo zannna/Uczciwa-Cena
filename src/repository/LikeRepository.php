@@ -36,5 +36,15 @@ class LikeRepository extends Repository
         }
         return $advertisements;
     }
+    public function getLikedId($id)
+    {
+
+        $stmt = $this->database->connect()->prepare('
+          SELECT liked.id_ad FROM liked WHERE id_user=:id
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }

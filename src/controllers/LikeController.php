@@ -55,5 +55,18 @@ class LikeController extends AppController
 
 
 }
+    public function likedAddsId()
+    {
+        $toReturn=[];
+        $likes= $this->likeRepository->getLikedId($this->userRepository->getUser($_COOKIE['user'])->getId());
+        foreach ($likes as $like)
+        {
+            array_push($toReturn, $like['id_ad']);
+
+
+        }
+
+        return $toReturn;
+    }
 
 }

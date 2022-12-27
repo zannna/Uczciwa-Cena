@@ -19,7 +19,7 @@ class AdvertisementRepository extends Repository
             throw new UnexpectedValueException();
         }
         $id=$ad['id'];
-        //DO POPRAWY moga sie wysłac puste
+        // moga sie wysłac puste
         if($option=="php") {
             $pictures = [$ad ['picture1'], $ad['picture2'], $ad['picture3'], $ad['picture4']];
             $ad = new Advertisement($pictures, $ad['name'], $ad['place'], $ad['description'], $ad['id'], $ad['id_owner']);
@@ -85,6 +85,7 @@ class AdvertisementRepository extends Repository
         $stmt->execute();
         $advertisements = [];
         $comments = [];
+        $likes=[];
         if ($offset == 0) {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -136,6 +137,7 @@ foreach ($advertisements as $ad)
 
 }
 
+
             return [$advertisements, $comments];
 
 
@@ -143,16 +145,16 @@ foreach ($advertisements as $ad)
 
     }
 
-    public function addAdvertisment(Advertisement $ad): void
+    public function addAdvertisment( $ad,  $id): void
     {
         $stmt = $this->database->connect()->prepare('
            INSERT INTO advertisement(name, place, description, picture1, picture2, picture3, picture4, id_owner) 
             VALUES (?,?,?,?,?,?,?,?)
         ');
         //DO POPRAWY PRZYPISANE NA SZTYWNO ID_OWNER, pobranie tej wartości na podstawie sesji użytkownika lab9 minuta25
-        $id_owner = 10;
+
         //dodawane wszystkie są obrazki trochę bezsensu bo mogą być puste
-        $stmt->execute([$ad->getName(), $ad->getPlace(), $ad->getDescription(), $ad->getFirstPicture(), $ad->getSecondPicture(), $ad->getThirdPicture(), $ad->getFourthPicture(), $id_owner]);
+        $stmt->execute([$ad->getName(), $ad->getPlace(), $ad->getDescription(), $ad->getFirstPicture(), $ad->getSecondPicture(), $ad->getThirdPicture(), $ad->getFourthPicture(), $id]);
 
     }
 

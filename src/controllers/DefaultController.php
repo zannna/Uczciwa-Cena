@@ -9,19 +9,22 @@ class DefaultController extends AppController {
     {
 
         $adController= new  AdvertisementController();
+        $likeController= new LikeController();
         if($id !=null)
         {
             $response=$adController->getAd($id);
         }
         else{
             $response=$adController->getAllAdvertisements(0);
+
         }
 
         foreach($response[1] as $i)
         {
             print($i->getContent());
         }
-        $this->render('index',  ['add' =>$response[0], 'com' =>$response[1]]);
+
+        $this->render('index',  ['add' =>$response[0], 'com' =>$response[1], 'liked' =>$likeController->likedAddsId()]);
     }
  public function indexWithAdvertisements()
     {
@@ -34,8 +37,11 @@ class DefaultController extends AppController {
             $decoded = json_decode($content, true);
             header('Content-Type: application/json');
             http_response_code(200);
-
-            echo json_encode(  $adController->getAllAdvertisements($decoded['offset']), true);
+            $likeController= new LikeController();
+            $liked=$likeController->likedAddsId();
+            $toReturn=$adController->getAllAdvertisements($decoded['offset']);
+            array_push( $toReturn, $liked);
+            echo json_encode( $toReturn , true);
         }
 
     }

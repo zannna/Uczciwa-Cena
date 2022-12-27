@@ -158,11 +158,10 @@ function like() {
     const clicked = this;
     const container = clicked.parentElement.parentElement.parentElement;
     const id = container.getAttribute("id");
-    console.log("like");
+
 
     let value = null;
     if (clicked.style.backgroundImage == "url(\"/public/img/ikonki/red_heart.png\")" || clicked.style.backgroundImage == "") {
-
         clicked.style.backgroundImage = "url('/public/img/ikonki/heart.png')";
         value = "unlike";
     }
