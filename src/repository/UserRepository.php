@@ -10,7 +10,7 @@ class UserRepository extends Repository
 
         if(gettype($value)== "string") {
             $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users WHERE email = :email
+            SELECT * FROM public.users WHERE md5(email) = :email
         ');
             $stmt->bindParam(':email', $value, PDO::PARAM_STR);
         }
@@ -43,7 +43,8 @@ class UserRepository extends Repository
             $details['name'],
             $details['surname'],
             $details['place'],
-            $details['phone_number']
+            $details['phone_number'],
+            $user['id']
 
         );
     }
@@ -67,6 +68,27 @@ class UserRepository extends Repository
         //DO POPRAWY PRZYPISANE NA SZTYWNO ID_OWNER, pobranie tej wartości na podstawie sesji użytkownika lab9 minuta25
 
 
+    }
+    public function deleteUser($id)
+    {
+        $stmt = $this->database->connect()->prepare('
+           SELECT id_user_details FROM users WHERE id=:id
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $detailsId = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt = $this->database->connect()->prepare('
+           DELETE FROM users WHERE id=:id
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $stmt = $this->database->connect()->prepare('
+           DELETE FROM user_details WHERE id=:id
+        ');
+        $stmt->bindParam(':id', $detailsId['id_user_details'], PDO::PARAM_INT);
+        $stmt->execute();
     }
 
 
