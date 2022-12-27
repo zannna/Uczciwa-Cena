@@ -9,11 +9,13 @@ class AdvertisementController extends AppController
     const UPLOAD_DIRECTORY = '/../public/uploads/';
     private $message = [];
     private $advertisementRepository;
+    private $userRepository;
 
     public function __construct()
     {
         parent::__construct();
         $this->advertisementRepository=new AdvertisementRepository();
+        $this->userRepository=new UserRepository();
     }
     public function getPicturesFromUser()
     {
@@ -50,9 +52,10 @@ class AdvertisementController extends AppController
 
         if ($this->isPost()){
         $fileArray=$this->getPicturesFromUser();
-
+            $hash=$_COOKIE['user'];
+            $id= $this->userRepository->getUser($hash)->getId();
             $advertisment= new Advertisement( $fileArray, $_POST['name'], $_POST['place'], $_POST['description']);
-            $this->advertisementRepository->addAdvertisment($advertisment);
+            $this->advertisementRepository->addAdvertisment($advertisment, $id);
 
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/getUserAdvertisements");
@@ -66,7 +69,9 @@ class AdvertisementController extends AppController
     public function getUserAdvertisements($option)
     {
         $this->checkAutentication();
-       $userId=10;
+       $hash=$_COOKIE['user'];
+       $id= $this->userRepository->getUser($hash)->getId();
+
        //żeby wyświtlić jedno ogłoszenie
         if($_GET['toShow']!=null)
         {
@@ -75,13 +80,13 @@ class AdvertisementController extends AppController
             $this->render('index',  ['add' =>$response[0], 'com' =>$response[1]]);
         }
         else if($option==null)
-        return $this->render('profile_ad', ['advertisment' => $this->advertisementRepository->getUserAdd(10, "php")]);
+        return $this->render('profile_ad', ['advertisment' => $this->advertisementRepository->getUserAdd($id, "php")]);
         else if($option!=null)
         {
             header('Content-Type: application/json');
             http_response_code(200);
 
-            echo json_encode(   $this->advertisementRepository->getUserAdd(10, "js"), true);
+            echo json_encode(   $this->advertisementRepository->getUserAdd($id, "js"), true);
         }
     }
     public function getAllAdvertisements($offset)

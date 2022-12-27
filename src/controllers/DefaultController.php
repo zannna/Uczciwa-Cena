@@ -5,10 +5,17 @@ require_once 'AdvertisementController.php';
 
 class DefaultController extends AppController {
 
-    public function index()
+    public function index($id)
     {
+
         $adController= new  AdvertisementController();
-        $response=$adController->getAllAdvertisements(0);
+        if($id !=null)
+        {
+            $response=$adController->getAd($id);
+        }
+        else{
+            $response=$adController->getAllAdvertisements(0);
+        }
 
         foreach($response[1] as $i)
         {
@@ -40,6 +47,17 @@ class DefaultController extends AppController {
     public function registration()
     {
         $this->render('registration');
+    }
+
+    public function logout()
+    {
+        setcookie("user",$_COOKIE['user'],time()-3600,"/");
+        if(isset($_COOKIE['user']))
+        {
+            header("Refresh:0");
+        }
+     $this->index(null);
+
     }
     public function getPhoneNumber(){
     if ($this->isPost()) {
