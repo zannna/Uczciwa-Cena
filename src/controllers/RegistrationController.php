@@ -52,22 +52,16 @@ public function getUserCredentials()
 
 }
     public function modifyProfile()
-    {//$this->checkAutentication();
+    { $this->checkAutentication();
 
-        print("jeest fajnie");
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json") {
 
             $content = trim(file_get_contents("php://input"));
-            print($content);
             $decoded = json_decode($content, true);
-            http_response_code(200);
             $hash=$_COOKIE['user'];
             $user= $this->userRepository->getUser($hash);
-            print( $decoded['name']);
-            print($user->getId());
-            print("ahahaha");
             if( $decoded['name']!=null)
                 $user->setName($decoded['name']);
             if( $decoded['surname']!=null)
@@ -78,7 +72,8 @@ public function getUserCredentials()
                 $user->setPhone((int)$decoded['phone']);
             if( $decoded['password']!=null)
                 $user->setPassword(md5($decoded['password']));
-            if( $decoded['email']!=null) {
+
+            if( $decoded['email']!="") {
                 $existingUser=null;
                 try {
                     $existingUser = $this->userRepository->getUser(md5($decoded['email']));
@@ -91,11 +86,17 @@ public function getUserCredentials()
 
                 } else {
                     $user->setEmail($decoded['email']);
+                    setcookie("user",$_COOKIE['user'],time()-3600,"/");
+                 //   setcookie("user", md5($decoded['email']), time()+(3600*5), "/");
                 }
             }
-            $this->userRepository->deleteUser($user->getId());
-            $this->userRepository->addUser($user);
 
+            $this->userRepository->modifyUser($user);
+            if( $decoded['email']!=null)
+                setcookie("user", md5($decoded['email']), time()+(3600*5), "/");
+
+            http_response_code(200);
+            echo json_encode('added');
         }
 
     }

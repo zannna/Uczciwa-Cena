@@ -49,7 +49,7 @@ class UserRepository extends Repository
         );
     }
 
-    public function addUser(User $user)
+    public function addUser(User $user, $givenId)
     {
 
 
@@ -59,13 +59,21 @@ class UserRepository extends Repository
         $stmt->execute([$user->getName(), $user->getSurname(), $user->getPlace(), $user->getPhone()]);
         $id = $db->lastInsertId();
 
-        $stmt = $this->database->connect()->prepare('
+        if($givenId !=null)
+        {
+            $stmt = $this->database->connect()->prepare('
+           INSERT INTO users(password, email, id_user_details, id)
+            VALUES (?,?,?,?)
+        ');
+            $stmt->execute([$user->getPassword(), $user->getEmail(), $id, $givenId]);
+        }
+        else {
+            $stmt = $this->database->connect()->prepare('
            INSERT INTO users(password, email, id_user_details)
             VALUES (?,?,?)
         ');
-        $stmt->execute([$user->getPassword(), $user->getEmail(), $id]);
-
-        //DO POPRAWY PRZYPISANE NA SZTYWNO ID_OWNER, pobranie tej wartości na podstawie sesji użytkownika lab9 minuta25
+            $stmt->execute([$user->getPassword(), $user->getEmail(), $id]);
+        }
 
 
     }
@@ -89,6 +97,40 @@ class UserRepository extends Repository
         ');
         $stmt->bindParam(':id', $detailsId['id_user_details'], PDO::PARAM_INT);
         $stmt->execute();
+    }
+    public function modifyUser($user)
+    {
+        $stmt = $this->database->connect()->prepare('
+                UPDATE users SET email= :email, password= :password 
+            WHERE id = :id
+        ');
+
+        $stmt->bindValue(':email', $user->getEmail());
+        $stmt->bindValue(':password', $user->getPassword());
+        $stmt->bindParam(':id', $user->getId(), PDO::PARAM_INT);
+        $stmt->execute();
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT id_user_details FROM users WHERE id = :id
+        ');
+        $stmt->bindParam(':id', $user->getId(), PDO::PARAM_INT);
+        $stmt->execute();
+        $detailsId= $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt = $this->database->connect()->prepare('
+                UPDATE user_details SET name= :name, surname= :surname, place= :place, phone_number= :phone
+            WHERE id = :id
+        ');
+$num= $detailsId;
+
+        $stmt->bindValue(':name', $user->getName());
+        $stmt->bindValue(':surname', $user->getSurname());
+        $stmt->bindValue(':place', $user->getPlace());
+        $stmt->bindValue(':phone', $user->getPhone());
+        $stmt->bindValue(':id', $detailsId['id_user_details'], PDO::PARAM_INT);
+        $stmt->execute();
+
+
     }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-class User
+class User  implements JsonSerializable
 {
     private $email;
     private $password;
@@ -8,9 +8,9 @@ class User
     private $surname;
     private $place;
     private $phone;
+    private $id;
 
-
-    public function __construct(string $email, string $password,string $name, string $surname, string $place, int $phone)
+    public function __construct(string $email, string $password, string $name, string $surname, string $place, int $phone, int $id=0)
     {
         $this->email = $email;
         $this->password = $password;
@@ -18,6 +18,7 @@ class User
         $this->surname = $surname;
         $this->place = $place;
         $this->phone = $phone;
+        $this->id = $id;
     }
 
 
@@ -35,6 +36,10 @@ class User
     public function getPassword(): string
     {
         return $this->password;
+    }
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -69,6 +74,64 @@ class User
         return $this->phone;
     }
 
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $surname
+     */
+    public function setSurname(string $surname): void
+    {
+        $this->surname = $surname;
+    }
+
+    /**
+     * @param string $place
+     */
+    public function setPlace(string $place): void
+    {
+        $this->place = $place;
+    }
+
+    /**
+     * @param int $phone
+     */
+    public function setPhone(int $phone): void
+    {
+        $this->phone = $phone;
+    }
 
 
+    public function jsonSerialize()
+    {
+        return ['email' =>$this->email,
+    'password'=>$this->password,
+    'name'=> $this->name,
+    'surname'=> $this->surname,
+    'place' =>$this->place,
+    'phone' =>$this->phone,
+            'id'=> $this->id
+    ];
+    }
 }
