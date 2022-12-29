@@ -2,6 +2,7 @@ var binButtons = document.querySelectorAll(".binButton");
 const concreteButtons = document.querySelectorAll(".optionButton");
 const rightContainer = document.getElementById("rightContainer");
 
+
 function deleteAd() {
     const clicked = this;
     const container = clicked.parentElement.parentElement.parentElement;
@@ -223,6 +224,8 @@ function displayNumber() {
 
 
 }
+
+
 
 /*
 function displayAdvertisement()

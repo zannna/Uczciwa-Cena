@@ -5,6 +5,7 @@ class Comment
   private $idAd;
   private $idUser;
   private $content;
+  private $date;
 
     /**
      * @param $idAd
@@ -16,6 +17,7 @@ class Comment
         $this->idAd = $idAd;
         $this->idUser = $idUser;
         $this->content = $content;
+
     }
 
     /**
@@ -40,6 +42,14 @@ class Comment
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 
 
