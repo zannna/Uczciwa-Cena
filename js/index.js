@@ -1,17 +1,22 @@
 const search = document.querySelector('input[placeholder="miasto, województwo"]');
+try{
 document.getElementById("alarm").addEventListener('click', function (event) {
     const dropdownContainer = document.querySelector(".dropdown-menu");
     dropdownContainer.innerHTML="Nowe komentarze:";
     getNotifications(0);
     value2=5;
-});
+});}
+catch(error)
+{
+
+}
 loadButtons();
 const adContainer = document.querySelector(".things");
 search.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
         const data = {search: this.value};
-
+        console.log(data);
         fetch("/getAdvertisementByPlace", {
             method: "POST",
             headers: {
@@ -21,9 +26,11 @@ search.addEventListener("keyup", function (event) {
         }).then(function (response) {
             return response.json();
         }).then(function (projects) {
+            console.log(projects[0]);
             adContainer.innerHTML = "";
             loadProjects(projects);
             loadButtons();
+                elm.removeEventListener('scroll', callFuntion);
         });
     }
 
@@ -91,9 +98,9 @@ function createProject(project, display=false) {
     adContainer.appendChild(clone);
 
 }
-
+const elm = document.querySelector('.things');
 document.addEventListener('DOMContentLoaded', function () {
-    const elm = document.querySelector('.things');
+
 
 
     if (elm.id != "object")
@@ -152,13 +159,23 @@ function send() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(dataToSend)
+    }).then(function () {
+        document.querySelector(".commentToSend").value="";
+        let div = document.createElement('div');
+        div.classList.add('comments');
+        let content = document.createTextNode(comment);
+        div.appendChild(content);
+        container.querySelector('.comments-section').appendChild(div);
+    }).catch((error) => {
+        let div = document.createElement('div');
+        div.classList.add('message');
+        let content = document.createTextNode("Zaloguj się, aby dodać komentarz");
+        div.appendChild(content);
+        container.querySelector(".message").appendChild(div);
+
+
     });
-    document.querySelector(".commentToSend").value="";
-    let div = document.createElement('div');
-    div.classList.add('comments');
-    let content = document.createTextNode(comment);
-    div.appendChild(content);
-    container.querySelector('.comments-section').appendChild(div);
+
 
     // const adContainer = document.querySelector(".comments");
     //  adContainer.style.height="3.5vh";
@@ -193,11 +210,22 @@ function displayNumber() {
         container.querySelector('.popup-section').appendChild(div);
         container.querySelector(".popup").style.display = 'block';
 
+    }).catch((error) => {
+        createMessage(container, "Zaloguj się, aby zobaczyć");
     });
 
 
 }
-
+function createMessage(container, message)
+{
+    let div = document.createElement('div');
+    div.classList.add('popup');
+    let content = document.createTextNode(message);
+    div.appendChild(content);
+    container.querySelector('.popup-section').innerHTML="";
+    container.querySelector('.popup-section').appendChild(div);
+    container.querySelector(".popup").style.display = 'block';
+}
 function like() {
     const clicked = this;
     const container = clicked.parentElement.parentElement.parentElement;
@@ -206,15 +234,10 @@ function like() {
     console.log(clicked.style.backgroundImage);
     let value = null;
     if (clicked.style.backgroundImage == "url(\"/public/img/ikonki/red_heart.png\")" || clicked.className == "redHeartButton") {
-        console.log("nieee");
-        clicked.style.backgroundImage = "url('/public/img/ikonki/heart.png')";
         value = "unlike";
     } else if (clicked.style.backgroundImage == "url(\"/public/img/ikonki/heart.png\")" || clicked.style.backgroundImage == "") {
-        console.log("auuuu");
-        clicked.style.backgroundImage = "url('/public/img/ikonki/red_heart.png')";
         value = "like";
     }
-
 
     const info = {liked: id, option: value};
     fetch("/like", {
@@ -223,6 +246,14 @@ function like() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(info)
+    }).then(function () {
+        if (clicked.style.backgroundImage == "url(\"/public/img/ikonki/red_heart.png\")" || clicked.className == "redHeartButton") {
+            clicked.style.backgroundImage = "url('/public/img/ikonki/heart.png')";
+        } else if (clicked.style.backgroundImage == "url(\"/public/img/ikonki/heart.png\")" || clicked.style.backgroundImage == "") {
+            clicked.style.backgroundImage = "url('/public/img/ikonki/red_heart.png')";
+        }
+    }).catch((error) => {
+        createMessage(container, "Zaloguj się, aby polubić");
     });
 
 

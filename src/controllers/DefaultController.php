@@ -66,6 +66,7 @@ class DefaultController extends AppController {
 
     }
     public function getPhoneNumber(){
+        $this->checkAutentication();
     if ($this->isPost()) {
         $advertisementRepository= new AdvertisementRepository();
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';

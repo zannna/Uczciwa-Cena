@@ -17,6 +17,7 @@ class CommentsController extends AppController
 
     public function sendComment()
     {
+        $this->checkAutentication();
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json") {
