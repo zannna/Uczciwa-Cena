@@ -227,10 +227,11 @@ foreach ($advertisements as $ad)
     public function getAddByPlace($place)
     {
         // $place= '%'.strtolower($place).'%';
+        $lowPlace=strtolower($place);
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.advertisement WHERE LOWER(place) = :place
+            SELECT * FROM public.advertisement WHERE LOWER(place) = LOWER(:place)
         ');
-        $stmt->bindParam(':place', $place, PDO::PARAM_STR);
+        $stmt->bindParam(':place', $lowPlace, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -75,9 +75,14 @@ class AdvertisementController extends AppController
        //żeby wyświtlić jedno ogłoszenie
         if($_GET['toShow']!=null)
         {
+            $user_id=0;
+            if (isset($_COOKIE['user']))
+                $user_id= $this->userRepository->getUser($_COOKIE['user'])->getId();
+            $likeRepository=new LikeRepository();
             $response=$this->advertisementRepository->getAd((int) $_GET['toShow'], "php");
-
-            $this->render('index',  ['add' =>$response[0], 'com' =>$response[1]]);
+            $ad_id=$response[0]->getId();
+            print_r(($likeRepository->isLiked($id, $ad_id)['exists'] == 1) ? [$id] : []);
+            $this->render('index',  ['add' =>$response[0], 'com' =>$response[1], "liked" => ($likeRepository->isLiked($id, $ad_id)['exists'] == 1) ? [$ad_id] : []]);
         }
         else if($option==null)
         return $this->render('profile_ad', ['advertisment' => $this->advertisementRepository->getUserAdd($id, "php")]);
@@ -113,8 +118,33 @@ class AdvertisementController extends AppController
             $decoded = json_decode($content, true);
             header('Content-Type: application/json');
             http_response_code(200);
+            $likeRepo= new LikeRepository();
+            $user_id=0;
+            $allLiked=[];
+            if (isset($_COOKIE['user'])) {
+                $user_id = $this->userRepository->getUser($_COOKIE['user'])->getId();
+                $tmp= $likeRepo->getLikedId($user_id);
+                foreach ( $tmp as $l)
+                {
+                    array_push( $allLiked,$l['id_ad']);
+                }
+            }
+            $liked=[];
+            $advertisements= $this->advertisementRepository->getAddByPlace($decoded['search']);
+            $commentRepository= new CommentRepository();
+            $comments=[];
+            foreach ($advertisements as $ad)
+            {
+                $ad_id=$ad['id'];
+                array_push($comments,  $commentRepository->getAllComments($ad_id));
+                if ($user_id!=0 and in_array( $ad_id, $allLiked))
+                {
+                    array_push( $liked,$ad_id);}
 
-            echo json_encode($this->advertisementRepository->getAddByPlace($decoded['search']), true);
+
+            }
+
+            echo json_encode([$this->advertisementRepository->getAddByPlace($decoded['search']), $comments[0], $liked ], true);
         }
     }
 
@@ -157,13 +187,20 @@ class AdvertisementController extends AppController
     }
     function getAdvertisement()
     {
-        $id=$_GET['toShow'];
-        $response=$this->advertisementRepository->getAd((int) $id, "php");
+        $ad_id=(int)$_GET['toShow'];
+        $response=$this->advertisementRepository->getAd( $ad_id, "php");
        /* foreach($response[1] as $i)
         {
             print($i->getContent());
         }*/
-        $this->render('index',  ['add' =>$response[0], 'com' =>$response[1]]);
+        $user_id=0;
+        if (isset($_COOKIE['user']))
+            $user_id= $this->userRepository->getUser($_COOKIE['user'])->getId();
+
+            $likeRepository=new LikeRepository();
+   // print_r( ($likeRepository->isLiked(58, 6)['exists'] == 1) ? [$ad_id] : []);
+        //($likeRepository->isLiked($user_id, $ad_id)['exists'] == 1) ? [$ad_id] : []
+        $this->render('index',  ['add' =>$response[0], 'com' =>$response[1],'liked'=>  [1,2,3,4]]);
 
     }
 

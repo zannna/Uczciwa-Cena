@@ -46,5 +46,13 @@ class LikeRepository extends Repository
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function isLiked($user_id, $ad_id)
+    {
+        $stmt = $this->database->connect()->prepare('SELECT EXISTS(SELECT 1 FROM liked WHERE id_user=:user_id and id_ad=:ad_id)');
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':ad_id', $ad_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 
 }

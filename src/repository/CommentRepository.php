@@ -28,24 +28,18 @@ class CommentRepository extends Repository
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-        $comments = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!comments) {
-            throw new UnexpectedValueException();
-        }
-
-        return $comments;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
     public function getNotif($id, $offset, $liked)
     {
 
-$array=[];
-foreach($liked as $like)
-    {
-       array_push($array,$like['id_ad']);
-    }
+        $array = [];
+        foreach ($liked as $like) {
+            array_push($array, $like['id_ad']);
+        }
         $stmt = $this->database->connect()->prepare('
            SELECT comments.content, a.picture1, a.name, a.id FROM comments
 inner join advertisement a on a.id = comments.ad_id where a.id_owner=? OR a.id = ANY(?)
@@ -57,7 +51,7 @@ OFFSET  ?;
         $encoded = str_replace('[', '{', $encoded);
         $encoded = str_replace(']', '}', $encoded);
 
-$stmt->execute([$id,$encoded, $offset]);
+        $stmt->execute([$id, $encoded, $offset]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
