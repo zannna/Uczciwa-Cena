@@ -32,7 +32,7 @@ class AdvertisementRepository extends Repository
         $stmt->execute();
         $comments =[];
         while ($com= $stmt->fetch(PDO::FETCH_ASSOC)) {
-            array_push($comments, new Comment($com['ad_id'], $com['user_id'], $com['content']));
+            array_push($comments, new Comment($com['ad_id'], $com['user_id'], $com['content'], $com['comment_id']));
         }
 
 
@@ -99,7 +99,7 @@ class AdvertisementRepository extends Repository
                 $stmt2->execute();
                // $stmt2->bindParam(':id', $row['id'], PDO::PARAM_INT);
                 while ($com= $stmt2->fetch(PDO::FETCH_ASSOC)) {
-                    array_push($comments, new Comment($com['ad_id'], $com['user_id'], $com['content']));
+                    array_push($comments, new Comment($com['ad_id'], $com['user_id'], $com['content'], $com['comment_id']));
                 }
             }
 
