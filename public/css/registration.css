@@ -101,3 +101,35 @@ width: 80%;
 /*margin:0.2em;*/
 
 }
+@media only screen and (max-device-width: 420px){
+
+    *
+    {
+        font-size:30px;
+    }
+    #containerlogo
+    {
+        display: none;
+    }
+    .container
+    {
+        background-image: url("../img/tlo.png");
+        background-size: cover;
+    }
+    .formContainer
+    {
+        width:100%;
+    }
+    form
+    {
+        background: none;
+        border: none;
+        box-shadow:none;
+
+    }
+    .button
+    {
+        width: 80%;
+    }
+
+}

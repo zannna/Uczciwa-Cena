@@ -47,7 +47,7 @@
     align-items: center;
 }
 /*ściąga mi forma z adding i przycisk głupio wygląda*/
-form
+#buttonForm
 {
     all: initial;
     height: 55vh;
@@ -63,11 +63,10 @@ form
 /* form z adding i przycisk głupio wygląda*/
 /*poprawic, bo losowy margines*/
 #gearForm {
-    all: initial;
-    margin-top: 0;
-    height: 50px;
-    width: 50px;
-    margin-bottom: 0.5em;
+
+    margin: 0.5em;
+    height:49px;
+
 }
 
 #option1
@@ -85,7 +84,9 @@ form
 }
 #showing
 {
-    all: initial;
+
+    margin: 0.5em;
+    height:49px;
 }
 #register
 {
@@ -106,7 +107,7 @@ form
     padding-right: 2em;
     background: #F0F0F0;
 
-   // min-width: 80vw;
+
 }
 .setting-button
 {
@@ -140,4 +141,118 @@ form
 .setting-form>input::placeholder{
 
     color:black;
+}
+#nav2-frame
+{
+    width:20%;
+    height: 100%;
+
+}
+.option-name
+{
+    display: none;
+}
+#greeting
+{
+    display: none;
+}
+@media only screen and (max-device-width: 420px)
+{
+    #addButton{
+        padding: 1em;
+        height: 12em;
+        width: 50%;
+        font-size: 3em;
+    }
+
+    .ad
+    {
+       width:70%;
+        height: 40em;
+        flex-shrink: 0;
+
+    }
+    .gearButton{
+        height: 90px;
+        width: 90px;
+    }
+    .binButton
+    {
+        height: 90px;
+        width: 90px;
+    }
+    #gearForm
+    {
+        height: 90px;
+    }
+    #showing
+    {
+        height: 100px;
+    }
+
+    nav2
+    {
+        justify-content: center;
+        align-items: center;
+        width:100%;
+
+    }
+    nav2>div{
+             text-align: center;
+        background: #F5F5F5;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        padding-top: 8em;
+        padding-bottom: 8em;
+        width:90%;
+         }
+    #rightContainer
+    {
+        display: none;
+        overflow: auto;
+
+    }
+    .optionButton
+    {
+        width:80%;
+        font-size: 6em;
+
+    }
+    #buttonForm
+    {
+        height: 30em;
+        min-height: 30em;
+        margin: 3em;
+        margin-top: 5em;
+    }
+body{
+    overflow: hidden;
+}
+    #greeting
+    {   padding:0;
+        display: block;
+        font-size: 5em;
+        font-family: 'Glegoo', serif;
+        margin-bottom: 1em;
+        color: #202020;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+        .setting-form {
+            font-size: 3.9em;
+            padding-left: 0.5em;
+            padding-right:0.5em;
+        }
+    .setting-form>input
+    {
+        width: 70vw;
+    }
+ .option-name
+    {
+        text-align: center;
+        background: #F5F5F5;
+        display: block;
+        font-size: 5.5em;
+     font-family: 'Aladin';
+        color: #202020;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
 }

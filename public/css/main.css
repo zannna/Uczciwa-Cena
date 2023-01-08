@@ -1,9 +1,9 @@
-body{
+body {
     margin: 0;
 
 }
-.base-container
-{
+
+.base-container {
 
     display: inline-flex;
     justify-content: flex-start;
@@ -13,33 +13,38 @@ body{
     height: 100vh;
 
 }
-#logo{
+
+#logo {
     height: 90%;
 }
-header
+nav>a
 {
+    height: 90%;
+}
+header {
 
     background-color: #94AFBE;
     width: auto;
     min-width: 100%;
-    height:120px;
+    height: 120px;
     position: sticky;
-    top:0;
+    top: 0;
 
 
 }
-nav
-{
-    height:120px;
+
+nav {
+
+    height: 120px;
     display: flex;
     justify-content: space-around;
-    align-items:center;
+    align-items: center;
     flex-direction: row;
 
 }
-input
-{
-    background:  #D9D9D9;
+
+input {
+    background: #D9D9D9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 30vw;
     font-size: 1.7em;
@@ -50,6 +55,7 @@ input
 
 
 }
+
 input::placeholder {
     font-family: 'Alumni Sans';
     color: #9CC6BB;
@@ -59,20 +65,18 @@ input::placeholder {
 }
 
 
-
-
-#icons
-{
-    max-height:4em;
+#icons {
+    max-height: 4em;
 }
+
 .search-bar {
     height: 40%;
     display: flex;
     justify-content: center;
     font-size: 90%;
 }
-.button
-{
+
+.button {
     background: #D9D9D9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
@@ -81,49 +85,48 @@ input::placeholder {
     border: none;
     font-family: 'Baloo Chettan 2', cursive;
     color: #FFFFFF;
-    height:2em;
+    height: 2em;
 
 
 }
-.advertisement
-{
+
+.advertisement {
 
     display: grid;
     background: #F0F0F0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 60%;
-    margin:2em;
-    padding:3em;
+    margin: 2em;
+    padding: 3em;
     font-size: 1.5em;
     font-family: 'Glegoo';
     color: #545157;
 
 }
 
-.advertisement> img
-{
+.advertisement > img {
 
     justify-self: center;
     width: 100%;
 }
-.advertisement>p
-{
+
+.advertisement > p {
     width: 80%;
     justify-self: center;
 }
-.advertisement>.commentsContainer
-{
+
+.advertisement > .commentsContainer {
     width: 80%;
     justify-self: center;
 }
-.buttonsContainer1
-{
+
+.buttonsContainer1 {
     width: 100%;
 
 
 }
-.buttonsContainer2
-{
+
+.buttonsContainer2 {
 
     display: flex;
     flex-direction: row;
@@ -131,16 +134,16 @@ input::placeholder {
     align-items: flex-end;
 
 }
-.heartButton
-{
+
+.heartButton {
     background-image: url("../img/ikonki/heart.png");
     background-size: cover;
     height: 50px;
     width: 50px;
 
 }
-.redHeartButton
-{
+
+.redHeartButton {
     background-image: url("../img/ikonki/red_heart.png");
     background-size: cover;
     height: 50px;
@@ -148,123 +151,128 @@ input::placeholder {
 
 }
 
-.phoneButton
-{
+.phoneButton {
     background-image: url("../img/ikonki/phone.svg");
     background-size: cover;
     height: 50px;
     width: 50px;
 
 }
-.sendButton
-{
-    background-image: url("../img/ikonki/send2.png") ;
+
+.sendButton {
+    background-image: url("../img/ikonki/send2.png");
     background-size: cover;
     height: 60px;
     width: 60px;
     margin: 0.5em;
 
 }
-main{
+
+main {
     width: 100%;
     height: 100%;
     background: #EAEAEA;
 }
-.things
-{
+
+.things {
 
     overflow: auto;
-    height: 100%; width: 100%;
+    height: 100%;
+    width: 100%;
     background: #EAEAEA;
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     scroll-behavior: smooth;
 
 
 }
-.commentsContainer{
+
+.commentsContainer {
     display: flex;
-    flex-direction:row;
-    justify-content:left;
-    align-items:center;
-    width:80%;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 80%;
 }
-.commentsContainer>input
-{
-    width:90%;
+
+.commentsContainer > input {
+    width: 90%;
 }
-form{
+
+form {
     margin-block-end: 0em;
 }
-.commentToSend
-{
-    background:  #D9D9D9;
+
+.commentToSend {
+    background: #D9D9D9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     width: 30vw;
-    height: 3.5vh;
-    font-size: 90%;
+    font-size: 80%;
     border: none;
     outline: none;
     text-align: start;
     color: black;
+    height: 1.5em;
 }
-.comments{
-    background:  #D9D9D9;
+
+.comments {
+    background: #D9D9D9;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-size: 90%;
     display: flex;
     align-items: center;
     color: black;
-    width:90%;
-    margin: 1.5vh;
-    height:3.5vh;
+    width: 80%;
+    margin: 0.5em;
+    height: 1.5em;
 }
-.popup-section
-{margin-top: 1vh;
+
+.popup-section {
+    margin-top: 1vh;
     display: flex;
-    flex-direction:row;
-    justify-content:right;
+    flex-direction: row;
+    justify-content: right;
     color: #70a2a1;
 
 
 }
-.popup
-{
 
-   display: none;
+.popup {
+
+    display: none;
     background: #F0F0F0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-padding: 0.8em;
+    padding: 0.8em;
+    font-size: 1.5em;
 }
 
-#buttons
-{
+#buttons {
     height: 85%;
     display: flex;
     justify-content: flex-end;
-    align-items:center;
+    align-items: center;
     flex-direction: row;
 
 }
-.concreteButton
-{
-    margin-left:1em;
-    margin:0.3em;
+
+.concreteButton {
+    margin-left: 1em;
+    margin: 0.3em;
     font-size: 1.5em;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     flex-direction: column;
     color: #272628;
     font-family: 'Glegoo';
-    height:100%;
+    height: 100%;
     width: 100%;
 
 
 }
-.alarmButton
-{
+
+.alarmButton {
     background-image: url("../img/ikonki/alarm.svg");
     background-size: cover;
     height: 70px;
@@ -274,10 +282,9 @@ padding: 0.8em;
     border-color: #66797d;
 
 
-
 }
-.profileButton
-{
+
+.profileButton {
     background-image: url("../img/ikonki/profile.svg");
     background-size: cover;
     height: 70px;
@@ -286,8 +293,8 @@ padding: 0.8em;
     border: 4px solid black;
     border-color: #66797d;
 }
-.logoutButton
-{
+
+.logoutButton {
     background-image: url("../img/ikonki/logout.svg");
     background-size: cover;
     height: 70px;
@@ -298,34 +305,37 @@ padding: 0.8em;
 
 
 }
-.dropdown
-{
-    position:relative;
+
+.dropdown {
+    position: relative;
+    text-align: center;
+
 }
-.dropdown-menu{
-/*border: 1.5px solid black;*/
+
+.dropdown-menu {
+    /*border: 1.5px solid black;*/
     border-color: black;
     opacity: 1;
-    position:absolute;
+    position: absolute;
     /*left:0;*/
-    right:0;
+    right: 0;
     background: whitesmoke;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
     transition: opacity 150ms ease-in-out;
-    margin-top:20px;
+    margin-top: 30px;
     width: 300px;
     height: 300px;
-    display:none;
+    display: none;
     padding: 1em;
     list-style-type: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow-y:  auto;
+    overflow-y: auto;
 
 }
 
-.dropdown-menu>form>button{
+.dropdown-menu > form > button {
     margin-top: 8px;
     background: #9fbbba;
     padding: 8px;
@@ -336,32 +346,173 @@ padding: 0.8em;
     flex-direction: row;
 
 }
-.dropdown-menu>form>button>img
-{
-    height:5em;
+
+.dropdown-menu > form > button > img {
+    height: 5em;
     width: 5em;
 }
-.dropdown-menu>form>button>div
-{
-margin-left:1em;
+
+.dropdown-menu > form > button > div {
+    margin-left: 1em;
 
 }
 
-.dropdown-menu>form>button>div>p{
+.dropdown-menu > form > button > div > p {
     font-weight: bold;
     margin: 0px;
     padding: 0px;
     font-size: 1.2em;
 }
-.dropdown-menu>form>button:hover
-{
+
+.dropdown-menu > form > button:hover {
     background: #6e8c8b;
 }
-.alarmButton:focus +.dropdown-menu,
-.dropdown-menu:hover/*,
+
+.alarmButton:focus + .dropdown-menu,
+.dropdown-menu:hover /*,
 .alarmButton:hover +.dropdown-menu,
 .dropdown-menu:hover*/
 {
     /*background: black;*/
     display: inline-block;
+}
+
+.message {
+    color: #70a2a1;
+    font-family: 'Alumni Sans';
+    text-align: center;
+}
+
+@media only screen and (max-device-width: 420px) {
+    nav {
+        height: auto;
+        max-height: 320px;
+        background-color: #94AFBE;
+        display: grid;
+        grid-template-areas:
+    "a buttons"
+    "searchbar ..";
+        row-gap: 0px;
+        grid-template-rows: 200px auto;
+    }
+    nav>a { grid-area: a; }
+    .search-bar { grid-area: searchbar;
+        grid-column: 1 /  3;
+        align-self: start;
+        height: 100px;
+    }
+    .search-bar>input
+    {
+        height: 2.2em;
+        width: 70%;
+        margin-left: 0.5em;
+        font-size: 2.5em;
+    }
+
+    #buttons { grid-area: buttons;
+    }
+header
+{
+    height: 250px;
+}
+
+    .advertisement {
+        width: 70%;
+        margin: 0;
+        font-size: 3em;
+        margin-bottom: 1em;
+        padding: 1.8em;
+    }
+
+    .button {
+        height: 2.5em;
+        font-size: 2em;
+        width: 8em;
+    }
+
+    .heartButton {
+        height: 100px;
+        width: 100px;
+        border: 4px solid black;
+    }
+
+    .redHeartButton {
+        height: 100px;
+        width: 100px;
+        border: 4px solid black;
+    }
+
+    .phoneButton {
+        height: 100px;
+        width: 100px;
+        border: 4px solid black;
+    }
+
+    .sendButton {
+        height: 100px;
+        width: 100px;
+        border: 4px solid black;
+    }
+
+
+
+    .alarmButton {
+        height: 100px;
+        width: 100px;
+
+    }
+
+    .profileButton {
+        height: 100px;
+        width:100px;
+
+    }
+
+    .logoutButton {
+
+        height: 100px;
+        width:100px;
+
+    }
+
+    .concreteButton {
+        font-size: 2.2em;
+        margin-bottom:0px;
+        margin-top:0px;
+    }
+
+    #icons {
+        height: 90px;
+        width: 90px;
+        max-height: 90px;
+    }
+
+    .dropdown-menu {
+
+        width: 65vw;
+        height: 500px;
+        margin-top: 70px;
+        font-size: 1.5em;
+    }
+
+    .dropdown-menu > form > button > div {
+        font-size: 3em;
+    }
+    .dropdown-menu > form > button > img {
+        height: 7em;
+        width: 7em;
+    }
+    .popup {
+
+        font-size: 1em;
+    }
+    .dropdown-menu > form > button
+    {
+        overflow: hidden;
+    }
+
+    #option1
+    {
+        background: #F5F5F5;
+    }
 }
