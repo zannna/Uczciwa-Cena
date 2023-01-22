@@ -17,45 +17,27 @@ if (!isset($_COOKIE['user'])) {
     <link href="https://fonts.googleapis.com/css2?family=Aladin&display=swap" rel="stylesheet">
     <title> AD </title>
 </head>
-
 <body>
 <div class="base-container">
-    <header>
-        <nav>
-            <a href="http://localhost:8080/"><img id="logo" src="public/img/logo2.svg"></a>
-            <div class="search-bar">
-                <input class="userInfo" placeholder="miasto, województwo" type="text">
-                <img id="icons" src="public/img/ikonki/lupka.png"></img>
-            </div>
-            <div id="buttons">
-                <div class="concreteButton">
-                    <button class="profileButton"></button>
-                    profil
-                </div>
-                <div class="concreteButton">
-                    <button class="alarmButton"></button>
-                    powiadomienia
-                </div>
-                <div class="concreteButton">
-                    <form id="register" action="logout" method="GET">
-                        <button class="logoutButton"></button>
-                    </form>
-                    wyloguj
-                </div>
-
-            </div>
-        </nav>
-    </header>
-
+    <?php include 'navigation.php';?>
     <main>
-
         <nav2>
+            <div>
+
+                <div id="greeting">
+                    Cześć  <?php
+                    if (isset($name))
+                        echo $name?>
+                    !
+                </div>
             <button id="option1" class="optionButton">moje ogłoszenia</button>
             <button id="option2" class="optionButton">polubione</button>
             <button id="option3" class="optionButton">ustawienia</button>
+            </div>
         </nav2>
+
         <div id="rightContainer">
-            <form action="addAdvertisement" method="GET">
+            <form id="buttonForm" action="addAdvertisement" method="GET">
                 <button id="addButton" type="submit"><img src="public/img/ikonki/add.svg"> DODAJ NOWE</button>
             </form>
             <?php
@@ -88,7 +70,7 @@ if (!isset($_COOKIE['user'])) {
         <img src=""></img>
         <div class="buttonsContainer1">
             <div class="buttonsContainer2">
-                <button class="heartButton"></button>
+                <button class="redHeartButton"></button>
                 <button class="phoneButton"></button>
                 <form id="showing" action="" method="GET">
                     <button type="submit" name="toShow" class="lookButton" value=""></button>
@@ -119,7 +101,7 @@ if (!isset($_COOKIE['user'])) {
 
 </template>
 <template id="user-addButton-template">
-    <form action="addAdvertisement" method="GET">
+    <form  id="buttonForm" action="addAdvertisement" method="GET">
         <button id="addButton" type="submit"><img src="../img/ikonki/add.svg"> DODAJ NOWE</button>
     </form>
 </template>

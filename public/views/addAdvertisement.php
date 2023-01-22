@@ -1,40 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<?php
+if (!isset($_COOKIE['user'])) {
+    $url = "htp://$_SERVER[HTTP_HOST]";
+    HEADER("Location: {$url}/");
+} ?>
 <head>
     <meta charset="UTF-8">
     <title>announcement adding</title>
     <link rel="stylesheet" type="text/css" href="public/css/zalogowany_main.css">
     <link rel="stylesheet" type="text/css" href="public/css/adding.css">
-    <script type="text/javascript" src="/js/adding.js" defer></script>
+    <script type="text/javascript" src="/js/addProject.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@800&display=swap" rel="stylesheet">
 
 
 </head>
 <body>
 <div class="base-container">
-    <header>
-        <nav>
-            <img id="logo" src="public/img/logo2.svg">
-            <div class="search-bar">
-                <input class="userInfo" placeholder="miasto, województwo" type="text">
-                <img id="icons" src="public/img/ikonki/lupka.png"></img>
-            </div>
-            <div id="buttons">
-                <div class="concreteButton">
-                    <button class="profileButton"></button>
-                    profil
-                </div>
-                <div class="concreteButton">
-                    <button class="alarmButton"></button>
-                    powiadomienia
-                </div>
-                <div class="concreteButton">
-                    <button class="logoutButton"></button>
-                    wyloguj
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php include 'navigation.php';?>
     <main>
         <form class="postAdvertisement"
             <?php
@@ -48,14 +30,17 @@
             if (isset($messages)) {
                 foreach ($messages as $message) {
                     echo $message;
+            ?><br>
+                <?php
                 }
             }
+
             ?>
             dodaj zdjęcia:
             <div class="addContainer">
                 <input id='files' name='file[]' type="file" multiple="multiple" hidden
                        accept="image/jpeg, image/png, image/jpg"/>
-                <input id="addButton" type="button""></input>
+                <input id="addButton" type="button"></input>
                 <div id="result">
                     <?php
                     if (isset($add)) {
@@ -93,7 +78,7 @@ if (isset($add)) {
     echo $add->getDescription();
 }
 ?>
-"></textarea>
+" ></textarea>
 <div class="endingButtons">
     <button id="undo" class="button" type="button">ANULUJ</button>
     <button name="change" type="submit" id="add" class="button"
@@ -101,15 +86,18 @@ if (isset($add)) {
         if (isset($add)) {
             echo $add->getId();
         ?>
-            value="<?=$add->getId()?>">
+            value="<?=$add->getId()?>"
          <?php } ?>
+    >
         <?php
         if (isset($add)) {
             ?>
             ZMIEŃ
-        <?php } else { ?>
+        <?php } ?>
+        <?php if (!isset($add)) { ?>
             DODAJ
         <?php } ?>
+
     </button>
 </div>
 </form>
