@@ -1,15 +1,4 @@
-const search = document.querySelector('input[placeholder="miasto, województwo"]');
-try{
-document.getElementById("alarm").addEventListener('click', function (event) {
-    const dropdownContainer = document.querySelector(".dropdown-menu");
-    dropdownContainer.innerHTML="Nowe komentarze:";
-    getNotifications(0);
-    value2=5;
-});}
-catch(error)
-{
-
-}
+const search = document.querySelector('input[name="search-place"]');
 loadButtons();
 const adContainer = document.querySelector(".things");
 search.addEventListener("keyup", function (event) {
@@ -30,7 +19,7 @@ search.addEventListener("keyup", function (event) {
             adContainer.innerHTML = "";
             loadProjects(projects);
             loadButtons();
-                elm.removeEventListener('scroll', callFuntion);
+                // elm.removeEventListener('scroll', callFunction);
         });
     }
 
@@ -40,18 +29,26 @@ let previous = '';
 function loadProjects(projects) {
     let clone = null;
     var liked = Object.values(projects[2]);
-    for (var i = 0; i < projects.length; i++) {
+    for (var i = 0; i < projects.length-1; i++) {
         var display=false;
         if (projects[0][i] != null) {
             if(liked.includes(projects[0][i].id))
             {
                 display=true;
             }
-            clone = createProject(projects[0][i], display);
+            if(projects[projects.length-1]==true)
+            {
+                clone = createProject(projects[0][i], display, true);
+                console.log(projects[0][i].id);
+                createAdminComment(projects[1][i], projects[0][i].id);
+            }
+            else
+            {
+                clone = createProject(projects[0][i], display, false);
+                createComment(projects[1][i], projects[0][i].id);
+            }
             console.log(projects[0][i]);
             console.log(projects[1][i]);
-            createComment(projects[1][i], projects[0][i].id);
-
 
         }
     }
@@ -59,7 +56,6 @@ function loadProjects(projects) {
 
 
 }
-
 function createComment(comment, id) {
     element = document.getElementById(id);
     for (const value of comment) {
@@ -71,11 +67,56 @@ function createComment(comment, id) {
     }
 }
 
-function createProject(project, display=false) {
+function createAdminComment(comment, id) {
+    element = document.getElementById(id);
+    for (const value of comment) {
+        const template = document.querySelector("#admin-comments-template")
+        const clone = template.content.cloneNode(true);
+        const button = clone.querySelector(".deleteCommentButton");
+        button.value = value.comment_id;
+        const div = clone.querySelector(".comments");
+        div.innerHTML = value.content;
+        let commentSection = element.querySelector(".comments-section");
+        commentSection.appendChild(clone);
+    }
+    let deleteCommentButtons = document.querySelectorAll(".deleteCommentButton");
+    deleteCommentButtons.forEach(button => button.addEventListener("click", deleteInappropriateComment));
+}
+function deleteInappropriateAdvertisement()
+{
+    console.log("1111");
+    const clicked = this;
+    const container = clicked.parentElement;
+    const id = container.getAttribute("id");
+    fetch(`/deleteAdvertisementAdmin/${id}`).then(function () {
+        const element = document.getElementById(id);
+        element.remove();
+    });
+}
+function deleteInappropriateComment()
+{
+    const clicked = this;
+    let id = clicked.value;
+    console.log(id);
+    fetch(`/deleteComment/${id}`).then(function () {
+        clicked.parentNode.parentNode.removeChild(clicked.parentNode);
+        console.log("1111");
+    });
+}
+
+
+function createProject(project, display=false, admin=false) {
     const template = document.querySelector("#advertisement-template")
     const clone = template.content.cloneNode(true);
-    // const div = clone.querySelector("div");
-    // div.id = project.id;
+    if(admin==true)
+    {
+        clone.querySelector(".deleteButton").style.visibility = 'visible';
+        clone.querySelector(".deleteDescription").style.visibility = 'visible';
+        let deleteCommentButtons =   clone.querySelectorAll(".deleteButton");
+        deleteCommentButtons.forEach(button => button.addEventListener("click", deleteInappropriateAdvertisement));
+        console.log(clone.querySelector(".deleteButton").style.visibility );
+    }
+
     const div = clone.querySelector("div");
     div.id = project.id;
     const name = clone.querySelector("p1");
@@ -136,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
                 value += 2;
                 sth = {offset: value};
-                // console.log(value);
+
             }
         }
 
@@ -160,7 +201,7 @@ function send() {
         },
         body: JSON.stringify(dataToSend)
     }).then(function () {
-        document.querySelector(".commentToSend").value="";
+        container.querySelector(".commentToSend").value="";
         let div = document.createElement('div');
         div.classList.add('comments');
         let content = document.createTextNode(comment);
@@ -177,8 +218,6 @@ function send() {
     });
 
 
-    // const adContainer = document.querySelector(".comments");
-    //  adContainer.style.height="3.5vh";
 
 
 }
@@ -270,89 +309,7 @@ function loadButtons() {
     redHeartButtons.forEach(button => button.addEventListener("click", like));
 }
 
-const dropdownContainer = document.querySelector(".dropdown-menu");
-
-function createNotification(notifications, offset)
-{
-
-    for (var i = 0; i < notifications.length; i++)
-    {
-        loadNotificatons(notifications[i]);
-    }
-}
-function loadNotificatons(notif)
-{
-    const template = document.querySelector("#dropdown-template")
-    const clone = template.content.cloneNode(true);
-    let button = clone.querySelector(".b1");
-    button.value= notif.id;
-    let b1div = clone.querySelector(".b1-div");
-    // button.style.background=black;
-    console.log(notif.id);
-    const image = clone.querySelector("img");
-    console.log(image);
-    image.src = `/public/uploads/${notif['picture1']}`;
-   let header = clone.querySelector("p");
-    header.innerHTML=notif.name;
-    b1div.innerHTML+='<br>'+notif['content'];
-    dropdownContainer.appendChild(clone);
-
-
-
-}
-
-function getNotifications( off)
-{
-
-    const info = { offset:off };
-    fetch(`/getNotifications`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-            body: JSON.stringify(info)
-        }
-    ).then(function (response) {
-
-        return response.json();
-    }).then(function (notifications) {
-        console.log(notifications);
-        if(notifications.length > 0)
-        {
-            createNotification(notifications, off);
-            const dropdownMenu = document.querySelector(".dropdown-menu");
-            dropdownMenu.addEventListener('scroll', getnewNotifications);
-
-        }
-        const dropdownButtons = document.querySelectorAll(".b1");
-        dropdownButtons.forEach(button => button.addEventListener("click", showAd));
-
-
-    });
-}
-
-var ok2 = 0;
-var value2;
-
-function getnewNotifications() {
-    var dropdown= document.querySelector(".dropdown-menu");
-    var scrollHeight = dropdown.scrollHeight;
-    var scrollTop = dropdown.scrollTop;
-    var clientHeight = dropdown.clientHeight;
-    console.log(scrollHeight+" "+scrollTop+" "+clientHeight);
-    if (scrollHeight - scrollTop - 20 <= clientHeight) {
-        if (ok2 == 0) {
-            ok2 = 1;
-            getNotifications(value2);
-            ok2 = 0;
-            value2 += 5;
-
-        }
-    }
-}
-function showAd()
-{
-    const clicked = this;
-    clicked.name;
-
-}
+let deleteButtons = document.querySelectorAll(".deleteButton");
+deleteButtons.forEach(button => button.addEventListener("click", deleteInappropriateAdvertisement));
+let deleteCommentButtons = document.querySelectorAll(".deleteCommentButton");
+deleteCommentButtons.forEach(button => button.addEventListener("click",deleteInappropriateComment));

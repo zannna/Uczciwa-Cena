@@ -55,7 +55,13 @@ OFFSET  ?;
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
-
+public function deleteComment($id)
+{
+    $stmt = $this->database->connect()->prepare('
+           DELETE FROM comments WHERE comment_id= :id    
+        ');
+    $stmt->execute([$id]);
+}
 
 }
 /*

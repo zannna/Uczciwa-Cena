@@ -1,6 +1,6 @@
 <?php
 
-class User  implements JsonSerializable
+class User implements JsonSerializable
 {
     private $email;
     private $password;
@@ -9,8 +9,9 @@ class User  implements JsonSerializable
     private $place;
     private $phone;
     private $id;
+    private $role;
 
-    public function __construct(string $email, string $password, string $name, string $surname, string $place, int $phone, int $id=0)
+    public function __construct(string $email, string $password, string $name, string $surname, string $place, int $phone, int $id = 0, string $role = "user")
     {
         $this->email = $email;
         $this->password = $password;
@@ -19,6 +20,7 @@ class User  implements JsonSerializable
         $this->place = $place;
         $this->phone = $phone;
         $this->id = $id;
+        $this->role = $role;
     }
 
 
@@ -37,6 +39,7 @@ class User  implements JsonSerializable
     {
         return $this->password;
     }
+
     public function getId()
     {
         return $this->id;
@@ -122,16 +125,32 @@ class User  implements JsonSerializable
         $this->phone = $phone;
     }
 
+    /**
+     * @return string
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
+    }
+
 
     public function jsonSerialize()
     {
-        return ['email' =>$this->email,
-    'password'=>$this->password,
-    'name'=> $this->name,
-    'surname'=> $this->surname,
-    'place' =>$this->place,
-    'phone' =>$this->phone,
-            'id'=> $this->id
-    ];
+        return ['email' => $this->email,
+            'password' => $this->password,
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'place' => $this->place,
+            'phone' => $this->phone,
+            'id' => $this->id
+        ];
     }
 }

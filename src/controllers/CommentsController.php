@@ -67,5 +67,20 @@ class CommentsController extends AppController
             echo json_encode($this->commentRepository->getNotif($id, $decoded['offset'], $likeRepo->getLikedId($id)), true);
         }
     }
+    public function deleteComment($id)
+    {
+        $this->checkAutentication();
+
+            $hash = $_COOKIE['user'];
+            $user = $this->userRepository->getUser($hash);
+            if ($user->getRole() != "admin") {
+                http_response_code(403);
+            }
+        elseif ($user->getRole() == "admin"){
+         $this->commentRepository->deleteComment($id);
+            http_response_code(200);}
+
+        }
+
 
 }

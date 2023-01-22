@@ -5,7 +5,7 @@ require_once __DIR__ . './../models/Advertisement.php';
 class AdvertisementRepository extends Repository
 {
 
-    public function getAd(int $id, String $option): Array
+    public function getAd(int $id, string $option): array
     {
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.advertisement WHERE id = :id
@@ -18,9 +18,9 @@ class AdvertisementRepository extends Repository
         if ($ad == false) {
             throw new UnexpectedValueException();
         }
-        $id=$ad['id'];
+        $id = $ad['id'];
         // moga sie wysłac puste
-        if($option=="php") {
+        if ($option == "php") {
             $pictures = [$ad ['picture1'], $ad['picture2'], $ad['picture3'], $ad['picture4']];
             $ad = new Advertisement($pictures, $ad['name'], $ad['place'], $ad['description'], $ad['id'], $ad['id_owner']);
         }
@@ -30,15 +30,13 @@ class AdvertisementRepository extends Repository
         ');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $comments =[];
-        while ($com= $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $comments = [];
+        while ($com = $stmt->fetch(PDO::FETCH_ASSOC)) {
             array_push($comments, new Comment($com['ad_id'], $com['user_id'], $com['content'], $com['comment_id']));
         }
 
 
-        //print($ad->getName());
-        //print_r($comments);
-        return [$ad,$comments];
+        return [$ad, $comments];
     }
 
     public function getOwner(int $id): int
@@ -62,7 +60,7 @@ class AdvertisementRepository extends Repository
     }
 
 
-    public function getAllAdds($offset)
+    public function getAllAdds($offset, $option)
     {  /* if($offset==0)
         $stmt = $this->database->connect()->prepare('
         SELECT * FROM comments
@@ -74,18 +72,31 @@ class AdvertisementRepository extends Repository
           ');
         else
         {*/
-        $base=$this->database->connect();
-        $stmt = $base->prepare('
+        $base = $this->database->connect();
+        if ($option == null) {
+            $stmt = $base->prepare('
             SELECT * FROM public.advertisement 
                     ORDER BY id DESC
                     LIMIT 2
                     OFFSET  :offset;
         ');
-        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+        } else {
+            $stmt = $base->prepare('
+            SELECT * FROM public.advertisement 
+                     WHERE place=:place
+                    ORDER BY id DESC
+                    LIMIT 2
+                    OFFSET  :offset;
+        ');
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindParam(':place', $option, PDO::PARAM_STR);
+            $stmt->execute();
+        }
         $advertisements = [];
         $comments = [];
-        $likes=[];
+        $likes = [];
         if ($offset == 0) {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -95,10 +106,10 @@ class AdvertisementRepository extends Repository
                 $stmt2 = $this->database->connect()->prepare('
             SELECT * FROM public.comments WHERE ad_id = :id
                 ');
-                $stmt2->bindParam(':id',  $row['id'], PDO::PARAM_INT);
+                $stmt2->bindParam(':id', $row['id'], PDO::PARAM_INT);
                 $stmt2->execute();
-               // $stmt2->bindParam(':id', $row['id'], PDO::PARAM_INT);
-                while ($com= $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                // $stmt2->bindParam(':id', $row['id'], PDO::PARAM_INT);
+                while ($com = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                     array_push($comments, new Comment($com['ad_id'], $com['user_id'], $com['content'], $com['comment_id']));
                 }
             }
@@ -125,17 +136,16 @@ class AdvertisementRepository extends Repository
             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
 */
-$advertisements=$stmt->fetchAll(PDO::FETCH_ASSOC);
-foreach ($advertisements as $ad)
-{
-    $stmt2 = $this->database->connect()->prepare('
+            $advertisements = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($advertisements as $ad) {
+                $stmt2 = $this->database->connect()->prepare('
             SELECT * FROM public.comments WHERE ad_id = :id
                 ');
-    $stmt2->bindParam(':id', $ad['id'], PDO::PARAM_INT);
-    $stmt2->execute();
-    array_push($comments, $stmt2->fetchAll(PDO::FETCH_ASSOC));
+                $stmt2->bindParam(':id', $ad['id'], PDO::PARAM_INT);
+                $stmt2->execute();
+                array_push($comments, $stmt2->fetchAll(PDO::FETCH_ASSOC));
 
-}
+            }
 
 
             return [$advertisements, $comments];
@@ -145,7 +155,7 @@ foreach ($advertisements as $ad)
 
     }
 
-    public function addAdvertisment( $ad,  $id): void
+    public function addAdvertisment($ad, $id): void
     {
         $stmt = $this->database->connect()->prepare('
            INSERT INTO advertisement(name, place, description, picture1, picture2, picture3, picture4, id_owner) 
@@ -179,8 +189,7 @@ foreach ($advertisements as $ad)
         $stmt->bindParam(':element', $element, PDO::PARAM_INT);
         $stmt->execute();
         // $info=$stmt->fetch(PDO::FETCH_ASSOC); CHYBA NIEPOTRZEBNE LOL
-        if($option=="js")
-        {
+        if ($option == "js") {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         $ad = [];
@@ -227,7 +236,7 @@ foreach ($advertisements as $ad)
     public function getAddByPlace($place)
     {
         // $place= '%'.strtolower($place).'%';
-        $lowPlace=strtolower($place);
+        $lowPlace = strtolower($place);
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.advertisement WHERE LOWER(place) = LOWER(:place)
         ');

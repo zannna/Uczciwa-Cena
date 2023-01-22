@@ -44,12 +44,13 @@ class UserRepository extends Repository
             $details['surname'],
             $details['place'],
             $details['phone_number'],
-            $user['id']
+            $user['id'],
+            $user['role']
 
         );
     }
 
-    public function addUser(User $user, $givenId)
+    public function addUser(User $user, $givenId=null)
     {
 
 

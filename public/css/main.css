@@ -86,7 +86,7 @@ input::placeholder {
     font-family: 'Baloo Chettan 2', cursive;
     color: #FFFFFF;
     height: 2em;
-
+    margin-top: 1em;
 
 }
 
@@ -107,7 +107,8 @@ input::placeholder {
 .advertisement > img {
 
     justify-self: center;
-    width: 100%;
+    /*width: 100%;*/
+    max-width: 100%;
 }
 
 .advertisement > p {
@@ -213,7 +214,7 @@ form {
     outline: none;
     text-align: start;
     color: black;
-    height: 1.5em;
+    height: 2.2em;
 }
 
 .comments {
@@ -225,7 +226,7 @@ form {
     color: black;
     width: 80%;
     margin: 0.5em;
-    height: 1.5em;
+    height: 2em;
 }
 
 .popup-section {
@@ -244,7 +245,7 @@ form {
     background: #F0F0F0;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 0.8em;
-    font-size: 1.5em;
+    /*font-size: 1.5em;*/
 }
 
 #buttons {
@@ -382,7 +383,36 @@ form {
     font-family: 'Alumni Sans';
     text-align: center;
 }
+.deleteDescription
+{
+    font-family: 'Baloo Chettan 2', cursive;
+    color:#730006;
+}
+.admin-comments
+{
+    display: flex;
+    flex-direction: row;
+}
+.deleteCommentButton
+{
+    height: 40px;
+    width:40px;
+    background-image: url("../img/ikonki/delete.svg");
+    background-size: cover;
+    border: 3px solid #730006;
+    margin: 1.5vh;
+}
+.deleteButton
+{
+    background-image: url("../img/ikonki/delete.svg");
+    background-size: cover;
+    height: 80px;
+    width: 80px;
+    border: 3px solid #730006;
+    align-self:flex-end;
+    margin-bottom: 2em;
 
+}
 @media only screen and (max-device-width: 420px) {
     nav {
         height: auto;
@@ -410,7 +440,13 @@ form {
     }
 
     #buttons { grid-area: buttons;
+        align-self: flex-end;
     }
+
+    #link-button { grid-area: buttons;
+        align-self: auto;
+    }
+
 header
 {
     height: 250px;

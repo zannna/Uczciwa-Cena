@@ -54,12 +54,25 @@ class AdvertisementController extends AppController
         $fileArray=$this->getPicturesFromUser();
             $hash=$_COOKIE['user'];
             $id= $this->userRepository->getUser($hash)->getId();
-            $advertisment= new Advertisement( $fileArray, $_POST['name'], $_POST['place'], $_POST['description']);
-            $this->advertisementRepository->addAdvertisment($advertisment, $id);
+            if( strlen($_POST['description'])>2000)
+            {
+                $this->message[] = " Podano za długi opis";
+            }
+            else if( strlen($_POST['name'])>200)
+            {
+                $this->message[] =  " Podano za długą nazwę";
+            }
+            elseif( strlen($_POST['place'])>300)
+            {
+                $this->message[] = " Podano za długą nazwę miejsca";
+            }
+            else {
+                $advertisment = new Advertisement($fileArray, $_POST['name'], $_POST['place'], $_POST['description']);
+                $this->advertisementRepository->addAdvertisment($advertisment, $id);
 
-            $url = "http://$_SERVER[HTTP_HOST]";
-            header("Location: {$url}/getUserAdvertisements");
-
+                $url = "http://$_SERVER[HTTP_HOST]";
+                header("Location: {$url}/getUserAdvertisements");
+            }
            // return $this->render('profile_ad', ['messages' => $this->message, 'advertisment'=> $this->advertisementRepository->getUserAdd(10)]);
     }
 
@@ -70,14 +83,11 @@ class AdvertisementController extends AppController
     {
         $this->checkAutentication();
        $hash=$_COOKIE['user'];
-       $id= $this->userRepository->getUser($hash)->getId();
-
+       $user=$this->userRepository->getUser($hash);
+       $id= $user->getId();
        //żeby wyświtlić jedno ogłoszenie
         if($_GET['toShow']!=null)
         {
-            $user_id=0;
-            if (isset($_COOKIE['user']))
-                $user_id= $this->userRepository->getUser($_COOKIE['user'])->getId();
             $likeRepository=new LikeRepository();
             $response=$this->advertisementRepository->getAd((int) $_GET['toShow'], "php");
             $ad_id=$response[0]->getId();
@@ -85,7 +95,7 @@ class AdvertisementController extends AppController
             $this->render('index',  ['add' =>$response[0], 'com' =>$response[1], "liked" => ($likeRepository->isLiked($id, $ad_id)['exists'] == 1) ? [$ad_id] : []]);
         }
         else if($option==null)
-        return $this->render('profile_ad', ['advertisment' => $this->advertisementRepository->getUserAdd($id, "php")]);
+        return $this->render('profile_ad', ['advertisment' => $this->advertisementRepository->getUserAdd($id, "php"), 'name' =>$user->getName()]);
         else if($option!=null)
         {
             header('Content-Type: application/json');
@@ -94,9 +104,9 @@ class AdvertisementController extends AppController
             echo json_encode(   $this->advertisementRepository->getUserAdd($id, "js"), true);
         }
     }
-    public function getAllAdvertisements($offset)
+    public function getAllAdvertisements($offset, $place=null)
     {
-        return  $this->advertisementRepository->getAllAdds($offset);
+        return  $this->advertisementRepository->getAllAdds($offset, $place);
     }
     public  function deleteAdvertisement($id)
 {
@@ -105,8 +115,6 @@ class AdvertisementController extends AppController
    // $this->render('profile_ad', ['messages' => $this->message, 'advertisment'=> $this->advertisementRepository->getUserAdd(10)]);
 
 }
-
-
     public function getAdvertisementByPlace()
     {
 
@@ -130,6 +138,7 @@ class AdvertisementController extends AppController
                 }
             }
             $liked=[];
+            if($decoded['search']!=null)
             $advertisements= $this->advertisementRepository->getAddByPlace($decoded['search']);
             $commentRepository= new CommentRepository();
             $comments=[];
@@ -147,7 +156,6 @@ class AdvertisementController extends AppController
             echo json_encode([$this->advertisementRepository->getAddByPlace($decoded['search']), $comments[0], $liked ], true);
         }
     }
-
     public function modifyAdvertisement()
     {
         $this->checkAutentication();
@@ -165,12 +173,10 @@ class AdvertisementController extends AppController
             if($_POST['description']!=null)
                 $advertisment->setDescription($_POST['description']);
             $this->advertisementRepository->updateAdd($advertisment);
-            $this->getUserAdvertisements();
+            $this->getUserAdvertisements(null);
         }
 
     }
-
-
     private function validate(array $file): bool
     {
         if ($file['size'] > self::MAX_FILE_SIZE) {
@@ -203,7 +209,17 @@ class AdvertisementController extends AppController
         $this->render('index',  ['add' =>$response[0], 'com' =>$response[1],'liked'=>  [1,2,3,4]]);
 
     }
+function deleteAdvertisementAdmin($id)
+{
 
+        $hash = $_COOKIE['user'];
+        if($this->userRepository->getUser($hash)->getRole()=="admin")
+        {
+            $this->deleteAdvertisement($id);
+        }
+        http_response_code(200);
+
+}
 }
 /*
 public function modifyAdvertisement($id)
