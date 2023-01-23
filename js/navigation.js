@@ -2,7 +2,6 @@ try{
     document.getElementById("alarm").addEventListener('click', function (event) {
         const dropdownContainer = document.querySelector(".dropdown-menu");
         dropdownContainer.innerHTML="Nowe komentarze:";
-        console.log("jestem");
         getNotifications(0);
 
         value2=5;
@@ -29,10 +28,7 @@ function loadNotificatons(notif)
     let button = clone.querySelector(".b1");
     button.value= notif.id;
     let b1div = clone.querySelector(".b1-div");
-    // button.style.background=black;
-    console.log(notif.id);
     const image = clone.querySelector("img");
-    console.log(image);
     image.src = `/public/uploads/${notif['picture1']}`;
     let header = clone.querySelector("p");
     header.innerHTML=notif.name;
@@ -45,7 +41,6 @@ function loadNotificatons(notif)
 
 function getNotifications( off)
 {
-    console.log("jestem");
     const info = { offset:off };
     fetch(`/getNotifications`, {
             method: "POST",
@@ -58,7 +53,6 @@ function getNotifications( off)
 
         return response.json();
     }).then(function (notifications) {
-        console.log(notifications);
         if(notifications.length > 0)
         {
             createNotification(notifications, off);
@@ -81,7 +75,6 @@ function getnewNotifications() {
     var scrollHeight = dropdown.scrollHeight;
     var scrollTop = dropdown.scrollTop;
     var clientHeight = dropdown.clientHeight;
-    console.log(scrollHeight+" "+scrollTop+" "+clientHeight);
     if (scrollHeight - scrollTop - 20 <= clientHeight) {
         if (ok2 == 0) {
             ok2 = 1;
