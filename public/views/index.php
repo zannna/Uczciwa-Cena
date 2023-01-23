@@ -176,6 +176,7 @@
                 <div class="comments"></div>
             </div>
         </div>
+        <div class="message"></div>
     </div>
 
 
