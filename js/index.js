@@ -13,6 +13,7 @@ search.addEventListener("keyup", function (event) {
             return response.json();
         }).then(function (projects) {
             adContainer.innerHTML = "";
+            console.log(projects);
             loadProjects(projects);
             loadButtons();
 
@@ -25,7 +26,7 @@ let previous = '';
 function loadProjects(projects) {
     let clone = null;
     var liked = Object.values(projects[2]);
-    for (var i = 0; i < projects.length - 1; i++) {
+    for (var i = 0; i < projects[0].length; i++) {
         var display = false;
         if (projects[0][i] != null) {
             if (liked.includes(projects[0][i].id)) {

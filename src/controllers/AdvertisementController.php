@@ -136,15 +136,14 @@ class AdvertisementController extends AppController
             $comments = [];
             foreach ($advertisements as $ad) {
                 $ad_id = $ad['id'];
-                array_push($comments, $commentRepository->getAllComments($ad_id));
+                array_push($comments,  $commentRepository->getAllComments($ad_id));
                 if ($user_id != 0 and in_array($ad_id, $allLiked)) {
                     array_push($liked, $ad_id);
                 }
 
 
             }
-
-            echo json_encode([$this->advertisementRepository->getAddByPlace($decoded['search']), $comments[0], $liked], true);
+            echo json_encode([$this->advertisementRepository->getAddByPlace($decoded['search']), $comments, $liked], true);
         }
     }
 
