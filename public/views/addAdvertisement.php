@@ -7,7 +7,7 @@ if (!isset($_COOKIE['user'])) {
 <head>
     <meta charset="UTF-8">
     <title>announcement adding</title>
-    <link rel="stylesheet" type="text/css" href="public/css/zalogowany_main.css">
+    <link rel="stylesheet" type="text/css" href="public/css/main.css">
     <link rel="stylesheet" type="text/css" href="public/css/adding.css">
     <script type="text/javascript" src="/js/addProject.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@800&display=swap" rel="stylesheet">
@@ -16,11 +16,11 @@ if (!isset($_COOKIE['user'])) {
 </head>
 <body>
 <div class="base-container">
-    <?php include 'navigation.php';?>
+    <?php include 'navigation.php'; ?>
     <main>
         <form class="postAdvertisement"
             <?php
-            if (isset($add)) {  ?>
+            if (isset($add)) { ?>
                 action="modifyAdvertisement"
             <?php } else { ?>
                 action="addAdvertisement"
@@ -30,8 +30,8 @@ if (!isset($_COOKIE['user'])) {
             if (isset($messages)) {
                 foreach ($messages as $message) {
                     echo $message;
-            ?><br>
-                <?php
+                    ?><br>
+                    <?php
                 }
             }
 
@@ -78,16 +78,16 @@ if (isset($add)) {
     echo $add->getDescription();
 }
 ?>
-" ></textarea>
+"></textarea>
 <div class="endingButtons">
     <button id="undo" class="button" type="button">ANULUJ</button>
     <button name="change" type="submit" id="add" class="button"
         <?php
         if (isset($add)) {
             echo $add->getId();
-        ?>
-            value="<?=$add->getId()?>"
-         <?php } ?>
+            ?>
+            value="<?= $add->getId() ?>"
+        <?php } ?>
     >
         <?php
         if (isset($add)) {

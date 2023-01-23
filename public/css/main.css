@@ -355,14 +355,14 @@ form {
 
 .dropdown-menu > form > button > div {
     margin-left: 1em;
-
+    font-size: 1.2em;
 }
 
 .dropdown-menu > form > button > div > p {
     font-weight: bold;
     margin: 0px;
     padding: 0px;
-    font-size: 1.2em;
+
 }
 
 .dropdown-menu > form > button:hover {

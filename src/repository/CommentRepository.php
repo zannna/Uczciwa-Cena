@@ -10,9 +10,7 @@ class CommentRepository extends Repository
            INSERT INTO comments(ad_id, user_id, content, adding_date) 
             VALUES (?,?,?,current_timestamp)
         ');
-            //DO POPRAWY PRZYPISANE NA SZTYWNO ID_OWNER,
-            //$id_owner = 10;
-            //dodawane wszystkie są obrazki trochę bezsensu bo mogą być puste
+
             $stmt->execute([$comment->getIdAd(), $comment->getIdUser(), $comment->getContent()]);
 
         }
@@ -55,19 +53,13 @@ OFFSET  ?;
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
-public function deleteComment($id)
-{
-    $stmt = $this->database->connect()->prepare('
+
+    public function deleteComment($id)
+    {
+        $stmt = $this->database->connect()->prepare('
            DELETE FROM comments WHERE comment_id= :id    
         ');
-    $stmt->execute([$id]);
-}
+        $stmt->execute([$id]);
+    }
 
 }
-/*
- SELECT comments.content, a.picture1, a.name, a.id FROM comments
-inner join advertisement a on a.id = comments.ad_id where a.id_owner=:id OR a.id in :array
-order by comments.adding_date desc
-LIMIT 3
-OFFSET  :offset;
- */

@@ -12,14 +12,16 @@
 <body>
 <header>
     <nav>
-        <a id="link-button" href="http://localhost:8080/"><img id="logo" src="public/img/logo2.svg"></a>
+        <a href="http://localhost:8080/"><img id="logo" src="public/img/logo2.svg"></a>
         <?php
-        if(isset($_COOKIE['user']))
-        {?>
+        if (isset($_COOKIE['user'])) {
+            ?>
 
             <div id="buttons">
                 <div class="concreteButton">
-                    <form action="getUserAdvertisements" method="GET"><button class="profileButton"></button></form>
+                    <form action="getUserAdvertisements" method="GET">
+                        <button class="profileButton"></button>
+                    </form>
                     profil
                 </div>
                 <div class="concreteButton">
@@ -32,19 +34,23 @@
                     </div>
                 </div>
                 <div class="concreteButton">
-                    <form action="logout" method="GET"><button class="logoutButton"></button></form>
+                    <form action="logout" method="GET">
+                        <button class="logoutButton"></button>
+                    </form>
                     wyloguj
                 </div>
             </div>
         <?php } else { ?>
-            <a href="http://localhost:8080/login"><button class="button">ZALOGUJ</button></a>
+            <a href="http://localhost:8080/login">
+                <button class="button">ZALOGUJ</button>
+            </a>
         <?php } ?>
     </nav>
 </header>
 </body>
 <template id="dropdown-template">
     <form action="getUserAdvertisements" method="GET">
-        <button type="submit" class="b1"  name="toShow" value="">
+        <button type="submit" class="b1" name="toShow" value="">
             <img src="">
             <div class="b1-div">
                 <p>heejka</p>

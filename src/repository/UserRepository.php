@@ -6,16 +6,14 @@ class UserRepository extends Repository
 {
     public function getUser($value): User
     {
-        $stmt=null;
+        $stmt = null;
 
-        if(gettype($value)== "string") {
+        if (gettype($value) == "string") {
             $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.users WHERE md5(email) = :email
         ');
             $stmt->bindParam(':email', $value, PDO::PARAM_STR);
-        }
-        elseif (gettype($value)=="integer")
-        {
+        } elseif (gettype($value) == "integer") {
             $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.users WHERE id = :id
         ');
@@ -30,7 +28,7 @@ class UserRepository extends Repository
         $stmt2 = $this->database->connect()->prepare('
             SELECT * FROM public.user_details WHERE id = :id
         ');
-        $stmt2->bindParam(':id',  $user['id_user_details'], PDO::PARAM_INT);
+        $stmt2->bindParam(':id', $user['id_user_details'], PDO::PARAM_INT);
         $stmt2->execute();
         $details = $stmt2->fetch(PDO::FETCH_ASSOC);
         if (!$details) {
@@ -50,7 +48,7 @@ class UserRepository extends Repository
         );
     }
 
-    public function addUser(User $user, $givenId=null)
+    public function addUser(User $user, $givenId = null)
     {
 
 
@@ -60,15 +58,13 @@ class UserRepository extends Repository
         $stmt->execute([$user->getName(), $user->getSurname(), $user->getPlace(), $user->getPhone()]);
         $id = $db->lastInsertId();
 
-        if($givenId !=null)
-        {
+        if ($givenId != null) {
             $stmt = $this->database->connect()->prepare('
            INSERT INTO users(password, email, id_user_details, id)
             VALUES (?,?,?,?)
         ');
             $stmt->execute([$user->getPassword(), $user->getEmail(), $id, $givenId]);
-        }
-        else {
+        } else {
             $stmt = $this->database->connect()->prepare('
            INSERT INTO users(password, email, id_user_details)
             VALUES (?,?,?)
@@ -78,6 +74,7 @@ class UserRepository extends Repository
 
 
     }
+
     public function deleteUser($id)
     {
         $stmt = $this->database->connect()->prepare('
@@ -99,6 +96,7 @@ class UserRepository extends Repository
         $stmt->bindParam(':id', $detailsId['id_user_details'], PDO::PARAM_INT);
         $stmt->execute();
     }
+
     public function modifyUser($user)
     {
         $stmt = $this->database->connect()->prepare('
@@ -116,13 +114,13 @@ class UserRepository extends Repository
         ');
         $stmt->bindParam(':id', $user->getId(), PDO::PARAM_INT);
         $stmt->execute();
-        $detailsId= $stmt->fetch(PDO::FETCH_ASSOC);
+        $detailsId = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $stmt = $this->database->connect()->prepare('
                 UPDATE user_details SET name= :name, surname= :surname, place= :place, phone_number= :phone
             WHERE id = :id
         ');
-$num= $detailsId;
+        $num = $detailsId;
 
         $stmt->bindValue(':name', $user->getName());
         $stmt->bindValue(':surname', $user->getSurname());

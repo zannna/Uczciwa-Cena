@@ -28,8 +28,10 @@
             <div id="containerButton">
             <button type="submit" class="button"">ZALOGUJ</button>
           </div>
-             Nie masz konta?
-              <a href="index.php"> Zarejestruj się</a>
+              <div id="registerContainer">
+                  Nie masz konta?
+                  <button id="register" name="register" value="ok">  &nbsp;Zarejestruj się</div>
+              </div>
           </form>
         </div> 
         </div>

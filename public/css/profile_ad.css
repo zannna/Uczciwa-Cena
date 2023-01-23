@@ -1,3 +1,91 @@
+main
+{
+    flex-grow: 1;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+
+}
+
+nav2
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+
+}
+
+.optionButton
+{
+    font-family: 'Aladin', cursive;
+    font-size: 2em;
+    width:100%;
+    height:3em;
+    border: 1px solid black;
+}
+#rightContainer
+{
+    background: #F0F0F0;
+    display: grid;
+    margin:0;
+    width:80%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 4em;
+    grid-column-gap: 3em;
+    grid-row-gap: 2em;
+    padding: 2em;
+    overflow: auto;
+
+
+}
+.ad
+{
+
+    height: 55vh;
+    min-height: 300px;
+    min-width: 200px;
+    background: #F5F5F5;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 2em;
+    padding-top: 5em;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+}
+.ad>img
+{
+    height: 70%;
+    width:90%;
+}
+
+.lookButton
+{
+    background-image: url("../img/ikonki/lupa.svg");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+
+
+}
+
+
+.buttonsContainer2>button
+{
+    margin:0.5em;
+}
+.buttonsContainer1
+{
+    margin-top:1em;
+    width:90%;
+    height: 90%;
+}
+.heartButton
+{
+    background-image: url("../img/ikonki/red_heart.png");
+}
 .gearButton {
     background-image: url("../img/ikonki/gear.svg");
     background-size: cover;
@@ -14,11 +102,9 @@
     border: 2px solid black;
 
 }
-/*wzięte z adding*/
+
 #addButton
 {
-    /*background-image: url("../img/ikonki/add.svg");
-    background-size: cover;*/
     margin-bottom: 0.5em;
     padding: 2em;
     width:45%;
@@ -46,7 +132,6 @@
     justify-content: center;
     align-items: center;
 }
-/*ściąga mi forma z adding i przycisk głupio wygląda*/
 #buttonForm
 {
     all: initial;
@@ -60,8 +145,6 @@
 
 }
 
-/* form z adding i przycisk głupio wygląda*/
-/*poprawic, bo losowy margines*/
 #gearForm {
 
     margin: 0.5em;
@@ -156,6 +239,12 @@
 {
     display: none;
 }
+.buttonsContainer1>.popup-section>.popup
+{
+    font-size: 1.5em;
+}
+
+
 @media only screen and (max-device-width: 420px)
 {
     #addButton{
@@ -168,7 +257,7 @@
     .ad
     {
        width:70%;
-        height: 40em;
+        height: 50em;
         flex-shrink: 0;
 
     }
@@ -209,7 +298,10 @@
     {
         display: none;
         overflow: auto;
-
+        justify-content: flex-start;
+        flex-direction:column;
+        align-items: center;
+        width: 100%;
     }
     .optionButton
     {
@@ -244,6 +336,7 @@ body{
     .setting-form>input
     {
         width: 70vw;
+        font-size: 0.85em;
     }
  .option-name
     {
@@ -254,5 +347,16 @@ body{
      font-family: 'Aladin';
         color: #202020;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+    .buttonsContainer1>.popup-section>.popup
+    {
+        font-size: 2.5em;
+    }
+
+    .lookButton
+    {
+        height: 100px;
+        width: 100px;
+        border: 2px solid black;
     }
 }

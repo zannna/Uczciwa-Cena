@@ -2,21 +2,23 @@
 
 class Comment
 {
-  private $idAd;
-  private $idUser;
-  private $content;
-  private $date;
+    private $idAd;
+    private $idUser;
+    private $content;
+    private $date;
+    private $id;
 
     /**
      * @param $idAd
      * @param $idUser
      * @param $content
      */
-    public function __construct($idAd, $idUser, $content)
+    public function __construct($idAd, $idUser, $content, $id = 0)
     {
         $this->idAd = $idAd;
         $this->idUser = $idUser;
         $this->content = $content;
+        $this->id = $id;
 
     }
 
@@ -50,6 +52,14 @@ class Comment
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 

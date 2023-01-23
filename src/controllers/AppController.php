@@ -1,6 +1,7 @@
 <?php
 
-class AppController {
+class AppController
+{
     private $request;
 
     public function __construct()
@@ -20,10 +21,10 @@ class AppController {
 
     protected function render(string $template = null, array $variables = [])
     {
-        $templatePath = 'public/views/'. $template.'.php';
+        $templatePath = 'public/views/' . $template . '.php';
         $output = 'File not found';
 
-        if(file_exists($templatePath)){
+        if (file_exists($templatePath)) {
             extract($variables);
 
             ob_start();
@@ -32,18 +33,19 @@ class AppController {
         }
         print $output;
     }
+
     public function checkAutentication()
     {
-        if(!isset($_COOKIE['user']))
-        {
-            $url="htp://$_SERVER[HTTP_HOST]";
+        if (!isset($_COOKIE['user'])) {
+            $url = "htp://$_SERVER[HTTP_HOST]";
             HEADER("Location: {$url}/");
         }
     }
+
     public function getUserFromCookies()
     {
-        $hashedEmail=$_COOKIE['user'];
-        $userRepository= new UserRepository();
+        $hashedEmail = $_COOKIE['user'];
+        $userRepository = new UserRepository();
 
     }
 }

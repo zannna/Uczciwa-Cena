@@ -7,32 +7,32 @@ if (!isset($_COOKIE['user'])) {
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="public/css/zalogowany_main.css">
-    <link rel="stylesheet" type="text/css" href="public/css/profile_like.css">
     <link rel="stylesheet" type="text/css" href="public/css/profile_ad.css">
     <script type="text/javascript" src="/js/projectsOptions.js" defer></script>
     <link rel="stylesheet" href="https://fonts.google.com/specimen/Glegoo?query=glegoo"/>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Chettan+2:wght@800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,300;0,400;0,500;1,200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans:ital,wght@0,300;0,400;0,500;1,200&display=swap"
+          rel="stylesheet">
     <script src="https://kit.fontawesome.com/84b42560c5.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Aladin&display=swap" rel="stylesheet">
     <title> AD </title>
 </head>
 <body>
 <div class="base-container">
-    <?php include 'navigation.php';?>
+    <?php include 'navigation.php'; ?>
     <main>
         <nav2>
             <div>
 
                 <div id="greeting">
-                    Cześć  <?php
+                    Cześć <?php
                     if (isset($name))
-                        echo $name?>
+                        echo $name ?>
                     !
                 </div>
-            <button id="option1" class="optionButton">moje ogłoszenia</button>
-            <button id="option2" class="optionButton">polubione</button>
-            <button id="option3" class="optionButton">ustawienia</button>
+                <button id="option1" class="optionButton">moje ogłoszenia</button>
+                <button id="option2" class="optionButton">polubione</button>
+                <button id="option3" class="optionButton">ustawienia</button>
             </div>
         </nav2>
 
@@ -101,7 +101,7 @@ if (!isset($_COOKIE['user'])) {
 
 </template>
 <template id="user-addButton-template">
-    <form  id="buttonForm" action="addAdvertisement" method="GET">
+    <form id="buttonForm" action="addAdvertisement" method="GET">
         <button id="addButton" type="submit"><img src="../img/ikonki/add.svg"> DODAJ NOWE</button>
     </form>
 </template>

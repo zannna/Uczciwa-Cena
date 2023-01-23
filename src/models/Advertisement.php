@@ -12,6 +12,7 @@ class Advertisement
     {
         return $this->pictures;
     }
+
     private $name;
     private $place;
     private $description;
@@ -19,7 +20,7 @@ class Advertisement
 
 
     //DO ZMIANY TE -1 xdddd
-    public function __construct(array $pictures, $name, $place, $description, $id = -1, $idOwner=-1 )
+    public function __construct(array $pictures, $name, $place, $description, $id = -1, $idOwner = -1)
     {
         $this->pictures = [];
         foreach ($pictures as $p) {
@@ -31,7 +32,7 @@ class Advertisement
         $this->place = $place;
         $this->description = $description;
         $this->id = $id;
-        $this->idOwner= $idOwner;
+        $this->idOwner = $idOwner;
     }
 
     /**
@@ -41,6 +42,7 @@ class Advertisement
     {
         return $this->id;
     }
+
     /**
      * @return int|mixed
      */
@@ -90,8 +92,6 @@ class Advertisement
         else
             return '';
     }
-
-
 
 
     /**
