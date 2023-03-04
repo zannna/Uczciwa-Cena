@@ -10,7 +10,7 @@ function open()
 }
 /*text area
 function vh(percent) {
-    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     return (percent * h) / 100;
 }
 
@@ -41,8 +41,6 @@ document.querySelector("#files").addEventListener("change", (e) => {
             });
             picReader.readAsDataURL(files[i]);
         }
-    } else {
-        alert("Your browser does not support File API");
     }
 });
 

@@ -21,21 +21,22 @@ create table users
 );
 create table advertisement
 (
-    id integer default nextval('table_name_id_seq'::regclass) not null
-        constraint table_name_pkey
-            primary key,
-    name varchar(200),
-    place varchar(300),
+    id          serial
+        primary key
+        unique,
+    name        varchar(200),
+    place       varchar(300),
     description varchar(2000),
-    picture1 varchar(250),
-    picture2 varchar(250),
-    picture3 varchar(250),
-    picture4 varchar(250),
-    id_owner integer not null
+    picture1    varchar(250),
+    picture2    varchar(250),
+    picture3    varchar(250),
+    picture4    varchar(250),
+    id_owner    integer not null
         constraint advertisement_users_id_fk
             references users
             on update cascade
 );
+
 create table comments
 (
     content varchar(750),
@@ -64,36 +65,36 @@ create table liked
             on update cascade on delete cascade
 );
 CREATE OR REPLACE FUNCTION getUserLiked(
- id_user INTEGER)
- RETURNS TABLE(id integer, picture1 character varying) AS $$
+    id_user INTEGER)
+    RETURNS TABLE(id integer, picture1 character varying) AS $$
 BEGIN
 RETURN QUERY SELECT advertisement.id,
- advertisement.picture1
- FROM advertisement INNER JOIN liked
- ON advertisement.id =
-liked.id_ad where liked.id_user=id_user;
+                        advertisement.picture1
+                 FROM advertisement INNER JOIN liked
+                                               ON advertisement.id =
+                                                  liked.id_ad where liked.id_user=:id_user;
 END; $$
 LANGUAGE 'plpgsql';
 INSERT INTO public.comments (content, ad_id, user_id, adding_date, comment_id) VALUES
-    ('badziewie', 45, 83, '2023-01-22 13:58:50.911468', DEFAULT)
-    INSERT INTO public.user_details (id, name, surname, place, phone_number) VALUES (DEFAULT,
-    'Ewa', 'Nowak', 'Lublin', 888888888)
-INSERT INTO public.users (id, email, password, id_user_details, role) VALUES (DEFAULT,
-    'nowak@gmail.com', '$2y$10$DWef5jY6geTRbJXJof..cOACry/qCuUUelrMA9Jg3m0u9U2MIv6bS', 1,
-    'user')
+    ('badziewie', 45, 83, '2023-01-22 13:58:50.911468', DEFAULT);
 INSERT INTO public.user_details (id, name, surname, place, phone_number) VALUES (DEFAULT,
-    'Mateusz', 'Kowalski', 'Lublin', 333333333)
+                                                                                 'Ewa', 'Nowak', 'Lublin', 888888888);
 INSERT INTO public.users (id, email, password, id_user_details, role) VALUES (DEFAULT,
-    'nowak@gmail.com', '$2y$10$DWef5jY6geTRbJXJof..cOACry/qCuUUelrMA9Jg3m0u9U2MIv6bS', 2,
-    'user')
+                                                                              'nowak@gmail.com', '$2y$10$DWef5jY6geTRbJXJof..cOACry/qCuUUelrMA9Jg3m0u9U2MIv6bS', 1,
+                                                                              'user');
+INSERT INTO public.user_details (id, name, surname, place, phone_number) VALUES (DEFAULT,
+                                                                                 'Mateusz', 'Kowalski', 'Lublin', 333333333);
+INSERT INTO public.users (id, email, password, id_user_details, role) VALUES (DEFAULT,
+                                                                              'nowak@gmail.com', '$2y$10$DWef5jY6geTRbJXJof..cOACry/qCuUUelrMA9Jg3m0u9U2MIv6bS', 2,
+                                                                              'user');
 INSERT INTO public.advertisement (id, name, place, description, picture1, picture2, picture3,
-                                  picture4, id_owner) VALUES (DEFAULT, 'foka', 'Lublin', 'Mało używana', 'foka.jpg', null, null, null, 1)
+                                  picture4, id_owner) VALUES (DEFAULT, 'foka', 'Lublin', 'Mało używana', 'foka.jpg', null, null, null, 1);
 INSERT INTO public.advertisement (id, name, place, description, picture1, picture2, picture3,
                                   picture4, id_owner) VALUES (DEFAULT, 'szafa', 'Lublin', 'Aktualnie rozmontowana', 'szafa.jpg', null,
-    null, null, 1)
+                                                              null, null, 1);
 INSERT INTO public.advertisement (id, name, place, description, picture1, picture2, picture3,
                                   picture4, id_owner) VALUES (DEFAULT, 'wózek', 'Lublin', 'bardzo fajny. Odbiór w okolicach dworca',
-    'wózek.jpg', null, null, null, 2)
+                                                              'wózek.jpg', null, null, null, 2);
 INSERT INTO public.comments (content, ad_id, user_id, adding_date, comment_id) VALUES
     ('Wezmę', 1, 2, '2023-01-22 15:58:50.911468', DEFAULT);
 INSERT INTO public.comments (content, ad_id, user_id, adding_date, comment_id) VALUES ('Możesz

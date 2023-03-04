@@ -13,7 +13,6 @@ search.addEventListener("keyup", function (event) {
             return response.json();
         }).then(function (projects) {
             adContainer.innerHTML = "";
-            console.log(projects);
             loadProjects(projects);
             loadButtons();
 
@@ -21,13 +20,13 @@ search.addEventListener("keyup", function (event) {
     }
 
 });
-let previous = '';
+previous = '';
 
 function loadProjects(projects) {
-    let clone = null;
-    var liked = Object.values(projects[2]);
-    for (var i = 0; i < projects[0].length; i++) {
-        var display = false;
+    clone = null;
+    liked = Object.values(projects[2]);
+    for (i = 0; i < projects[0].length; i++) {
+         display = false;
         if (projects[0][i] != null) {
             if (liked.includes(projects[0][i].id)) {
                 display = true;
@@ -51,9 +50,9 @@ function loadProjects(projects) {
 function createComment(comment, id) {
     element = document.getElementById(id);
     for (const value of comment) {
-        let div = document.createElement('div');
+        div = document.createElement('div');
         div.classList.add('comments');
-        let content = document.createTextNode(value.content);
+        content = document.createTextNode(value.content);
         div.appendChild(content);
         element.querySelector('.comments-section').appendChild(div);
     }
@@ -68,10 +67,10 @@ function createAdminComment(comment, id) {
         button.value = value.comment_id;
         const div = clone.querySelector(".comments");
         div.innerHTML = value.content;
-        let commentSection = element.querySelector(".comments-section");
+        commentSection = element.querySelector(".comments-section");
         commentSection.appendChild(clone);
     }
-    let deleteCommentButtons = document.querySelectorAll(".deleteCommentButton");
+    deleteCommentButtons = document.querySelectorAll(".deleteCommentButton");
     deleteCommentButtons.forEach(button => button.addEventListener("click", deleteInappropriateComment));
 }
 
@@ -87,7 +86,7 @@ function deleteInappropriateAdvertisement() {
 
 function deleteInappropriateComment() {
     const clicked = this;
-    let id = clicked.value;
+    id = clicked.value;
     fetch(`/deleteComment/${id}`).then(function () {
         clicked.parentNode.parentNode.removeChild(clicked.parentNode);
     });
@@ -100,7 +99,7 @@ function createProject(project, display = false, admin = false) {
     if (admin == true) {
         clone.querySelector(".deleteButton").style.visibility = 'visible';
         clone.querySelector(".deleteDescription").style.visibility = 'visible';
-        let deleteCommentButtons = clone.querySelectorAll(".deleteButton");
+        deleteCommentButtons = clone.querySelectorAll(".deleteButton");
         deleteCommentButtons.forEach(button => button.addEventListener("click", deleteInappropriateAdvertisement));
     }
 
@@ -130,15 +129,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     if (elm.id != "object") elm.addEventListener('scroll', callFuntion);
-    var ok = 0;
-    var value = 2;
+    ok = 0;
+    value = 2;
 
     function callFuntion() {
 
-        var scrollHeight = elm.scrollHeight;
-        var scrollTop = elm.scrollTop;
-        var clientHeight = elm.clientHeight;
-        var sth = {offset: value};
+        scrollHeight = elm.scrollHeight;
+        scrollTop = elm.scrollTop;
+        clientHeight = elm.clientHeight;
+        sth = {offset: value};
         if (scrollHeight - scrollTop - 600 <= clientHeight) {
             if (ok == 0) {
                 ok = 1;
@@ -176,15 +175,15 @@ function send() {
         }, body: JSON.stringify(dataToSend)
     }).then(function () {
         container.querySelector(".commentToSend").value = "";
-        let div = document.createElement('div');
+        div = document.createElement('div');
         div.classList.add('comments');
-        let content = document.createTextNode(comment);
+        content = document.createTextNode(comment);
         div.appendChild(content);
         container.querySelector('.comments-section').appendChild(div);
     }).catch((error) => {
-        let div = document.createElement('div');
+        div = document.createElement('div');
         div.classList.add('message');
-        let content = document.createTextNode("Zaloguj się, aby dodać komentarz");
+        content = document.createTextNode("Zaloguj się, aby dodać komentarz");
         div.appendChild(content);
         container.querySelector(".message").appendChild(div);
 
@@ -199,7 +198,7 @@ function displayNumber() {
     const container = clicked.parentElement.parentElement.parentElement;
     const id = container.getAttribute("id");
     const data = {search: id};
-    var phone = 0;
+    phone = 0;
     fetch("/getPhoneNumber", {
         method: "POST", headers: {
             'Content-Type': 'application/json'
@@ -208,9 +207,9 @@ function displayNumber() {
         return response.json();
     }).then(function (number) {
         phone = number;
-        let div = document.createElement('div');
+        div = document.createElement('div');
         div.classList.add('popup');
-        let content = document.createTextNode(" numer telefonu: " + phone);
+        content = document.createTextNode(" numer telefonu: " + phone);
         div.appendChild(content);
         container.querySelector('.popup-section').appendChild(div);
         container.querySelector(".popup").style.display = 'block';
@@ -223,9 +222,9 @@ function displayNumber() {
 }
 
 function createMessage(container, message) {
-    let div = document.createElement('div');
+    div = document.createElement('div');
     div.classList.add('popup');
-    let content = document.createTextNode(message);
+    content = document.createTextNode(message);
     div.appendChild(content);
     container.querySelector('.popup-section').innerHTML = "";
     container.querySelector('.popup-section').appendChild(div);
@@ -236,7 +235,7 @@ function like() {
     const clicked = this;
     const container = clicked.parentElement.parentElement.parentElement;
     const id = container.getAttribute("id");
-    let value = null;
+    value = null;
     if (clicked.style.backgroundImage == "url(\"/public/img/ikonki/red_heart.png\")" || clicked.className == "redHeartButton") {
         value = "unlike";
     } else if (clicked.style.backgroundImage == "url(\"/public/img/ikonki/heart.png\")" || clicked.style.backgroundImage == "") {
@@ -262,17 +261,17 @@ function like() {
 }
 
 function loadButtons() {
-    let phoneButtons = document.querySelectorAll(".phoneButton");
-    let sendButtons = document.querySelectorAll(".sendButton");
-    let heartButtons = document.querySelectorAll(".heartButton");
-    let redHeartButtons = document.querySelectorAll(".redHeartButton");
+    phoneButtons = document.querySelectorAll(".phoneButton");
+    sendButtons = document.querySelectorAll(".sendButton");
+    heartButtons = document.querySelectorAll(".heartButton");
+    redHeartButtons = document.querySelectorAll(".redHeartButton");
     sendButtons.forEach(button => button.addEventListener("click", send));
     phoneButtons.forEach(button => button.addEventListener("click", displayNumber));
     heartButtons.forEach(button => button.addEventListener("click", like));
     redHeartButtons.forEach(button => button.addEventListener("click", like));
 }
 
-let deleteButtons = document.querySelectorAll(".deleteButton");
+deleteButtons = document.querySelectorAll(".deleteButton");
 deleteButtons.forEach(button => button.addEventListener("click", deleteInappropriateAdvertisement));
-let deleteCommentButtons = document.querySelectorAll(".deleteCommentButton");
+deleteCommentButtons = document.querySelectorAll(".deleteCommentButton");
 deleteCommentButtons.forEach(button => button.addEventListener("click", deleteInappropriateComment));

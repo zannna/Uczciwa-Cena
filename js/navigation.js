@@ -1,47 +1,42 @@
-try{
+try {
     document.getElementById("alarm").addEventListener('click', function (event) {
         const dropdownContainer = document.querySelector(".dropdown-menu");
-        dropdownContainer.innerHTML="Nowe komentarze:";
+        dropdownContainer.innerHTML = "Nowe komentarze:";
         getNotifications(0);
 
-        value2=5;
-    });}
-catch(error)
-{
+        value2 = 5;
+    });
+} catch (error) {
 
 }
 
 const dropdownContainer = document.querySelector(".dropdown-menu");
 
-function createNotification(notifications, offset)
-{
+function createNotification(notifications, offset) {
 
-    for (var i = 0; i < notifications.length; i++)
-    {
+    for (var i = 0; i < notifications.length; i++) {
         loadNotificatons(notifications[i]);
     }
 }
-function loadNotificatons(notif)
-{
+
+function loadNotificatons(notif) {
     const template = document.querySelector("#dropdown-template")
     const clone = template.content.cloneNode(true);
-    let button = clone.querySelector(".b1");
-    button.value= notif.id;
-    let b1div = clone.querySelector(".b1-div");
+    button = clone.querySelector(".b1");
+    button.value = notif.id;
+    b1div = clone.querySelector(".b1-div");
     const image = clone.querySelector("img");
     image.src = `/public/uploads/${notif['picture1']}`;
-    let header = clone.querySelector("p");
-    header.innerHTML=notif.name;
-    b1div.innerHTML+='<br>'+notif['content'];
+    header = clone.querySelector("p");
+    header.innerHTML = notif.name;
+    b1div.innerHTML += '<br>' + notif['content'];
     dropdownContainer.appendChild(clone);
-
 
 
 }
 
-function getNotifications( off)
-{
-    const info = { offset:off };
+function getNotifications(off) {
+    const info = {offset: off};
     fetch(`/getNotifications`, {
             method: "POST",
             headers: {
@@ -53,8 +48,7 @@ function getNotifications( off)
 
         return response.json();
     }).then(function (notifications) {
-        if(notifications.length > 0)
-        {
+        if (notifications.length > 0) {
             createNotification(notifications, off);
             const dropdownMenu = document.querySelector(".dropdown-menu");
             dropdownMenu.addEventListener('scroll', getnewNotifications);
@@ -67,14 +61,14 @@ function getNotifications( off)
     });
 }
 
-var ok2 = 0;
-var value2;
+ok2 = 0;
+value2;
 
 function getnewNotifications() {
-    var dropdown= document.querySelector(".dropdown-menu");
-    var scrollHeight = dropdown.scrollHeight;
-    var scrollTop = dropdown.scrollTop;
-    var clientHeight = dropdown.clientHeight;
+    dropdown = document.querySelector(".dropdown-menu");
+    scrollHeight = dropdown.scrollHeight;
+    scrollTop = dropdown.scrollTop;
+    clientHeight = dropdown.clientHeight;
     if (scrollHeight - scrollTop - 20 <= clientHeight) {
         if (ok2 == 0) {
             ok2 = 1;
@@ -85,8 +79,8 @@ function getnewNotifications() {
         }
     }
 }
-function showAd()
-{
+
+function showAd() {
     const clicked = this;
     clicked.name;
 

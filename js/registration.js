@@ -15,7 +15,7 @@ function markValidation(element, condition) {
 }
 
 function validateEmail() {
-    var condition=false;
+    condition=false;
     setTimeout(function () {
             condition=  isEmail(emailInput.value);
             markValidation(emailInput, condition);
@@ -26,7 +26,7 @@ function validateEmail() {
 }
 
 function validatePassword() {
-    var condition=false;
+    condition=false;
     setTimeout(function () {
              condition = arePasswordsSame(
                  form.querySelector('input[name="password"]').value,
